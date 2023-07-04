@@ -1,6 +1,10 @@
 import os
 import pickle
 import warnings
+import warnings
+from sklearn.metrics import r2_score, mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
+import numpy as np
+from sklearn.preprocessing import StandardScaler
 
 def export_import_model(model, path_model, name, save=True, open=False):
     '''
@@ -40,10 +44,7 @@ def export_import_model(model, path_model, name, save=True, open=False):
     return model_pretrained
 
 
-import warnings
-from sklearn.metrics import r2_score, mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
-import numpy as np
-from sklearn.preprocessing import StandardScaler
+
 
 def comparar_scaled(modelo, x_train, x_test, y_train, y_test):
     '''
@@ -73,7 +74,7 @@ def comparar_scaled(modelo, x_train, x_test, y_train, y_test):
         y_pred = model1.predict(x_test)
     except Exception as e:
         warnings.warn(f"Error al hacer predicciones sin escalar: {str(e)}")
-        y_pred = []
+        
 
     # Calcular las métricas de evaluación utilizando y_test y las predicciones correspondientes
     try:
@@ -122,7 +123,7 @@ def comparar_scaled(modelo, x_train, x_test, y_train, y_test):
         y_pred_scaled = model_scal.predict(x_test_scaled)
     except Exception as e:
         warnings.warn(f"Error al hacer predicciones escaladas: {str(e)}")
-        y_pred_scaled = []
+        
 
     # Calcular las métricas de evaluación utilizando y_test y las predicciones correspondientes
     try:
