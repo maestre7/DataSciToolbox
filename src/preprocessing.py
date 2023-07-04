@@ -4,9 +4,6 @@ import numpy as np
 import pandas as pd
 
 
-import sys
-import pandas as pd
-
 class ReduceMemory:
     """
     Clase para reducir el consumo de memoria de un DataFrame de Pandas
