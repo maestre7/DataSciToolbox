@@ -1,6 +1,4 @@
-import sys
-sys.path.append("..")
-from src.preprocessing import split_and_encode_strings
+from preprocessing import split_and_encode_strings
 import pandas as pd
 import pytest
 
