@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import seaborn as sns
 
 def eliminacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
     '''
