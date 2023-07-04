@@ -1,8 +1,7 @@
-
 import sys
 import numpy as np
 import pandas as pd
-
+import rarfile
 
 class ReduceMemory:
     """
@@ -127,9 +126,7 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing int column: {str(err)}")
-            return data_serie
-
-import rarfile        
+            return data_serie      
 
 def leer_csv_desde_rar(ruta_archivo:str, nombre_archivo_csv:str) -> pd.DataFrame:
     
@@ -142,10 +139,6 @@ def leer_csv_desde_rar(ruta_archivo:str, nombre_archivo_csv:str) -> pd.DataFrame
 
     Returns:
         pd.DataFrame: Los datos leídos del archivo CSV como un DataFrame de pandas.
-
-    Raises:
-        FileNotFoundError: Si el archivo .rar no fue encontrado.
-        Exception: Si ocurre un error al leer el archivo .rar.
 
     """
     
@@ -161,5 +154,7 @@ def leer_csv_desde_rar(ruta_archivo:str, nombre_archivo_csv:str) -> pd.DataFrame
             print("El archivo CSV no se encuentra en el archivo .rar.")
     except FileNotFoundError:
         print("El archivo .rar no fue encontrado.")
+        return None
     except Exception as e:
         print("Ocurrió un error al leer el archivo .rar:", str(e))
+        return None
