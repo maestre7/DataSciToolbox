@@ -1,3 +1,7 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+
 def comprobacion_outliers(dataframe, nombre_columna):
     '''
     Esta función calcula el número de outliers y su proporción con respecto al total en una columna numérica de un DataFrame de Pandas.
