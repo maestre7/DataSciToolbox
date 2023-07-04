@@ -1,3 +1,8 @@
+from typing import Any
+import numpy, pandas
+
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+
 def evaluacion_clas(nom_modelo: str, modelo: Any, X_train: numpy.ndarray, y_train: numpy.ndarray, X_test: numpy.ndarray, y_test: numpy.ndarray, redondeo: int = None) -> pandas.DataFrame: # type: ignore
     """
     Función para evaluar las predicciones de un modelo de clasificación de machine learning, devolviendo diferentes métricas en un dataframe.
@@ -44,5 +49,5 @@ def evaluacion_clas(nom_modelo: str, modelo: Any, X_train: numpy.ndarray, y_trai
         return result_df
     
     except Exception as e:
-        print("Error al evaluar el modelo'{}':".format(nom_modelo))
-        return None # type: ignore  
+        print("Error al evaluar el modelo '{}':".format(nom_modelo))
+        return None # type: ignore
