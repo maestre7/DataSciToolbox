@@ -1,6 +1,10 @@
 import os
 import pickle
 import warnings
+from sklearn.metrics import r2_score, mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
+import warnings
+from sklearn.exceptions import UndefinedMetricWarning
+import numpy as np
 
 def export_import_model(model, path_model, name, save=True, open=False):
     '''
@@ -39,10 +43,7 @@ def export_import_model(model, path_model, name, save=True, open=False):
 
     return model_pretrained
 
-from sklearn.metrics import r2_score, mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
-import warnings
-from sklearn.exceptions import UndefinedMetricWarning
-import numpy as np
+
 
 def comparar_modelos(modelos, X_test, y_test):
     """
