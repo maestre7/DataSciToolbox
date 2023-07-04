@@ -32,7 +32,7 @@ def test_segmentar_y_guardar(df_ejemplo, ruta_salida):
         archivo_csv = f'{ruta_salida}/segmento_{i}.csv'
         assert os.path.exists(archivo_csv)
 
-        # Leer el archivo CSV y comparar con el segmento correspondiente del DataFrame original
+        # Leer el archivo CSV y comparar con el segmento correspondiente del DgataFrame original
         df_segmento = pd.read_csv(archivo_csv)
         df_segmento_expected = df_ejemplo.iloc[(i - 1) * 3:i * 3].reset_index(drop=True)
         assert df_segmento.equals(df_segmento_expected)

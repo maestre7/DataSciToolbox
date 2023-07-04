@@ -26,4 +26,3 @@ def segmentar_y_guardar(df, num_segmentos, output_folder):
         print(f"Se han creado {num_segmentos} archivos CSV segmentados en la carpeta '{output_folder}'.")
     except Exception as e:
         print(f"Error al guardar los segmentos en archivos CSV: {str(e)}")
-
