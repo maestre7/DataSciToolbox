@@ -1,6 +1,7 @@
 import pandas as pd
+from typing import Union
 
-def tratar_valores_nulos(dataframe, opcion):
+def tratar_valores_nulos(dataframe:pd.DataFrame, opcion:str) -> Union[pd.DataFrame, None]:
     """
     Trata los valores nulos en un DataFrame según la opción seleccionada.
 

@@ -1,10 +1,8 @@
-import sys
-sys.path.append("..")
 import pandas as pd
 import pytest
 
 
-from src.preprocessing import tratar_valores_nulos
+from preprocessing import tratar_valores_nulos
 
 def test_tratar_valores_nulos():
     # Crear un DataFrame de prueba con valores nulos
