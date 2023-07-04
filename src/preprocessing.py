@@ -3,6 +3,7 @@ from typing import Union
 import sys
 import numpy as np
 import pandas as pd
+import rarfile
 import zipfile
 
 
@@ -129,7 +130,42 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing int column: {str(err)}")
-            return data_serie
+
+            return data_serie      
+
+def leer_csv_desde_rar(ruta_archivo:str, nombre_archivo_csv:str) -> pd.DataFrame:
+    
+    """
+        Lee un archivo CSV desde un archivo .rar.
+
+    Args:
+        ruta_archivo (str): La ruta del archivo .rar.
+        nombre_archivo_csv (str): El nombre del archivo CSV que se desea leer desde el .rar.
+
+    Returns:
+        pd.DataFrame: Los datos leídos del archivo CSV como un DataFrame de pandas.
+
+    """
+    
+    
+    try:
+        archivo_rar = rarfile.RarFile(ruta_archivo) # Abrir el archivo .rar
+        contenido_rar = archivo_rar.namelist() # Leer el contenido del archivo .rar
+        if nombre_archivo_csv in contenido_rar: # Verificar si el archivo CSV está presente en el .rar          
+            with archivo_rar.open(nombre_archivo_csv) as archivo_csv: # Leer el archivo CSV
+                datos = pd.read_csv(archivo_csv)
+                return datos
+        else:
+            print("El archivo CSV no se encuentra en el archivo .rar.")
+            return None
+    except FileNotFoundError:
+        print("El archivo .rar no fue encontrado.")
+        return None
+    except Exception as e:
+        print("Ocurrió un error al leer el archivo .rar:", str(e))
+        return None
+
+
 
 def leer_csv_desde_zip(ruta_archivo: str, nombre_archivo_csv: str)-> pd.DataFrame:
     """
@@ -220,4 +256,4 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
     except Exception as e:
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
- 
+
