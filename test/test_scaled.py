@@ -1,5 +1,5 @@
 
-from src.modeling import comparar_scaled
+from modeling import comparar_scaled
 
 import numpy as np
 import pytest
