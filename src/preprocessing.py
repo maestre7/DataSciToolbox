@@ -1,33 +1,22 @@
 import pandas as pd
-import numpy as np
 
-def eliminacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
+def encoding_proporcional_target_binaria(dataframe: pd.DataFrame, target: str, columna_categorica: str, nueva_columna: str):
     '''
-    Esta función elimina las filas del DataFrame que contienen valores atípicos (outliers) en una columna especificada.
+    Esta función realiza un encoding de una columna de tipo object en un DataFrame de pandas, creando una nueva columna. Esta función está diseñada para el contexto en el que la variable a predecir sea binaria.
 
-    Args:
-    - dataframe: DataFrame de Pandas que contiene los datos.
-    - nombre_columna: Nombre de la columna en la cual se desean eliminar las filas con outliers. Se deberá indicar en formato string.
+    El encoding se realiza proporcionalmente al peso que cada variable categórica tiene en el problema.
 
-    Return:
-    - Devuelve el DataFrame sin los valores atípicos de la columna especificada.
+    Argumentos:
+    - dataframe: DataFrame de pandas que contiene los datos.
+    - target: Nombre de la columna a predecir en el DataFrame. Debe ser binaria y se debe indicar como una cadena de texto.
+    - columna_categorica: Nombre de la columna categórica que se desea encodear. Se debe indicar como una cadena de texto.
+    - nueva_columna: Nombre de la nueva columna que contendrá los valores encodeados. Se debe indicar como una cadena de texto.
     '''
 
     try:
-        if not isinstance(nombre_columna, str):
-            raise TypeError("El nombre de la columna debe ser un string.")
-        
-        df = dataframe.copy()
-        q1 = np.percentile(df[nombre_columna], 25)
-        q3 = np.percentile(df[nombre_columna], 75)
-        rango_intercuartilico = q3 - q1 
-        df = df[(df[nombre_columna] >= (q1 - 1.5 * rango_intercuartilico)) & (df[nombre_columna] <= (q3 + 1.5 * rango_intercuartilico))]
-
-        return df
-
-    except KeyError:
-        print("Error: La columna especificada no existe en el DataFrame.")
-    except TypeError as e:
-        print("Error:", str(e))
-    except:
-        print("Error: Se produjo un problema al procesar la función. Por favor, revisa la documentación de la función, verifica que los parámetros de entrada estén correctamente indicados y revisa los datos de tu DataFrame.")
+        dict_proporcional = dict(dataframe.groupby(columna_categorica)[target].mean())
+        dataframe[nueva_columna] = dataframe[columna_categorica].map(dict_proporcional)
+        return dataframe
+    except (KeyError, TypeError) as e:
+        print("Ocurrió un error al codificar la columna categórica:", str(e))
+        return None
