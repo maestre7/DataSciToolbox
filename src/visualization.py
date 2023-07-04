@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 from typing import Any, List
 
-def plot_scatter_with_reference(y_test: List[Any], predictions: List[Any], title: str) -> None:
+def plot_scatter_with_reference(y_test: np.array, predictions: np.array, title: str) -> None:
     """
     Genera un gráfico de dispersión con una línea de referencia para comparar los valores de prueba con los valores predichos.
 
@@ -26,3 +27,5 @@ def plot_scatter_with_reference(y_test: List[Any], predictions: List[Any], title
         plt.show()
     except Exception as e:
         print("Ocurrió un error al generar el gráfico de dispersión:", str(e))
+    finally:
+        return None
