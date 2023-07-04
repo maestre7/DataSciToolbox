@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 from dateutil.relativedelta import relativedelta
+import re
 
 def segmentar_y_guardar(df, num_segmentos, output_folder):
     """
@@ -104,3 +105,26 @@ def obtener_hora_minuto_segundo(df, columna_hora):
         print("Error al convertir la columna de hora:", str(e))
 
     return df
+
+import re
+
+def eliminar_unidades_metricas(df, columna):
+    """
+    Elimina las unidades métricas de una columna de un DataFrame y la convierte a tipo float.
+
+    Args:
+        df (pandas.DataFrame): El DataFrame que contiene la columna con unidades métricas.
+        columna (str): El nombre de la columna a procesar.
+
+    Returns:
+        pandas.DataFrame: El DataFrame modificado con la unidad métrica eliminada y la columna convertida a tipo float.
+    """
+    try:
+        valores = df[columna].astype(str)
+        valores_sin_unidades = valores.apply(lambda x: re.sub(r'[a-zA-Z]+', '', x))
+        valores_sin_unidades = valores_sin_unidades.str.strip()
+        df[columna] = valores_sin_unidades.astype(float)
+        return df
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return None
