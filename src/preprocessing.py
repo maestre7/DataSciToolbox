@@ -145,7 +145,6 @@ def leer_csv_desde_zip(ruta_archivo: str, nombre_archivo_csv: str)-> pd.DataFram
 
     """
 
-    
     try:
         archivo_zip = zipfile.ZipFile(ruta_archivo)  # Abrir el archivo .zip
         contenido_zip = archivo_zip.namelist()  # Leer el contenido del archivo .zip
@@ -155,6 +154,7 @@ def leer_csv_desde_zip(ruta_archivo: str, nombre_archivo_csv: str)-> pd.DataFram
             return datos
         else:
             print("El archivo CSV no se encuentra en el archivo .zip.")
+            return None
     except FileNotFoundError:
         print("El archivo .zip no fue encontrado.")
         return None
