@@ -1,7 +1,7 @@
 import re
 import pandas as pd
 
-def split_and_encode_strings(column, use_encoding: bool = False):
+def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> pd.DataFrame:
     """
     Separa una columna de un DataFrame utilizando cualquier carácter que no sea una letra o un número como separador,
     y opcionalmente aplica one-hot encoding (get dummies) a las palabras separadas.
