@@ -12,9 +12,6 @@ def leer_csv_desde_zip(ruta_archivo: str, nombre_archivo_csv: str)-> pd.DataFram
     Returns:
         pd.DataFrame: Los datos leídos del archivo CSV como un DataFrame de pandas.
 
-    Raises:
-        FileNotFoundError: Si el archivo .zip no fue encontrado.
-        Exception: Si ocurre un error al leer el archivo .zip.
 
     """
 
@@ -25,10 +22,12 @@ def leer_csv_desde_zip(ruta_archivo: str, nombre_archivo_csv: str)-> pd.DataFram
         if nombre_archivo_csv in contenido_zip:  # Verificar si el archivo CSV está presente en el .zip
             with archivo_zip.open(nombre_archivo_csv) as archivo_csv:  # Leer el archivo CSV
                 datos = pd.read_csv(archivo_csv)
-                return datos
+            return datos
         else:
             print("El archivo CSV no se encuentra en el archivo .zip.")
     except FileNotFoundError:
         print("El archivo .zip no fue encontrado.")
+        return None
     except Exception as e:
         print("Ocurrió un error al leer el archivo .zip:", str(e))
+        return None
