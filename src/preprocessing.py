@@ -11,7 +11,8 @@ def tratar_valores_nulos(dataframe:pd.DataFrame, opcion:str) -> Union[pd.DataFra
             Opciones disponibles: 'eliminar', 'rellenar_cero', 'rellenar_media'.
 
     Returns:
-        pd.DataFrame: El DataFrame con los valores nulos tratados según la opción seleccionada.
+        Union[pd.DataFrame, None]: El DataFrame con los valores nulos tratados según la opción seleccionada.
+        En caso de error, retorna None.
 
     """
     try:
