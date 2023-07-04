@@ -27,3 +27,5 @@ def plot_scatter_with_reference(y_test: np.array, predictions: np.array, title: 
         plt.show()
     except Exception as e:
         print("Ocurrió un error al generar el gráfico de dispersión:", str(e))
+    finally:
+        return None
