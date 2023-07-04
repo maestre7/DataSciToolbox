@@ -49,5 +49,5 @@ def evaluacion_clas(nom_modelo: str, modelo: Any, X_train: numpy.ndarray, y_trai
         return result_df
     
     except Exception as e:
-        print("Error al evaluar el modelo '{}':".format(nom_modelo))
+        print("Error al evaluar el modelo'{}':".format(nom_modelo))
         return None # type: ignore
