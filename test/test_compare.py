@@ -2,7 +2,7 @@ import pytest
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.datasets import make_regression
-from src.modeling import comparar_modelos
+from modeling import comparar_modelos
 
 
 
