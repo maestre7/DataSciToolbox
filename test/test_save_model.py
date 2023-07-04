@@ -1,40 +1,29 @@
 import os
 import pickle
-import warnings
+import pytest
 
-def export_import_model(model, path_model, name, save=True, open=False):
-    '''
-    Funcion para exportar o importar el modelo entrenado
+from src.modeling import export_import_model
 
-    Parametros
-    ----------
-        model: el modelo a guardar.
+def test_export_import_model(tmpdir):
+    # Crear un modelo de prueba
+    model = "modelo de prueba"
 
-        path_model: directorio donde se almacenará.
+    # Definir el directorio de prueba y el nombre de archivo
+    path_model = str(tmpdir)
+    name = "test_model.pkl"
 
-        name: nombre del modelo a guardar.
-        
-        save: por defecto nos guarda el modelo entrenado.
+    # Exportar el modelo
+    export_import_model(model, path_model, name, save=True)
 
-        open: por defecto False. Si True, importamos el modelo entrenado
-    '''
-  
-    # Exportamos el modelo con el nombre seleccionado, al path escogido.
-    filename = os.path.join(path_model, name)
+    # Comprobar si el archivo se ha creado correctamente
+    assert os.path.isfile(os.path.join(path_model, name))
 
-    if save:
-        try:
-            with open(filename, 'wb') as archivo_salida:
-                pickle.dump(model, archivo_salida)
-        except Exception as e:
-            print(f"Error al guardar el modelo: {str(e)}")
+    # Importar el modelo
+    loaded_model = export_import_model(None, path_model, name, open=True)
 
-    if open:
-        try:
-            with open(filename, 'rb') as archivo_entrada:
-                model_pretrained = pickle.load(archivo_entrada)
-        except Exception as e:
-            print(f"Error al cargar el modelo: {str(e)}")
-            model_pretrained = None
+    # Comprobar si el modelo importado es igual al modelo original
+    assert loaded_model == model
 
-    return model_pretrained
+    # Intentar importar un archivo inexistente
+    with pytest.raises(FileNotFoundError):
+        export_import_model(None, path_model, "nonexistent.pkl", open=True)

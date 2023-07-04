@@ -1,3 +1,6 @@
+
+from src.modeling import comparar_scaled
+
 import numpy as np
 import pytest
 from sklearn.linear_model import LinearRegression
@@ -5,8 +8,6 @@ from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
-
-from scaled import comparar_scaled
 
 def test_comparar_scaled():
     # Generar datos de prueba
