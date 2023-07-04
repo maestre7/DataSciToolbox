@@ -2,7 +2,7 @@ import os
 import pickle
 import pytest
 
-from src.modeling import export_import_model
+from modeling import export_import_model
 
 def test_export_import_model(tmpdir):
     # Crear un modelo de prueba
