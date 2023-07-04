@@ -160,7 +160,6 @@ def tratar_valores_nulos(dataframe:pd.DataFrame, opcion:str) -> Union[pd.DataFra
             return dataframe
     except Exception as e:
         print("Ocurrió un error al tratar los valores nulos:", str(e))
-import pandas as pd
 
 def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> pd.DataFrame:
     """
