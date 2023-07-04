@@ -2,7 +2,7 @@ import os
 import pickle
 import warnings
 
-def export_import_model(model, path_model, name, save=True, open=False):
+def export_import_model(model:object, path_model:str, name:str, save:bool=True, open:bool=False):
     '''
     Funcion para exportar o importar el modelo entrenado
 
@@ -37,5 +37,5 @@ def export_import_model(model, path_model, name, save=True, open=False):
             print(f"Error al cargar el modelo: {str(e)}")
             model_pretrained = None
 
-    return model_pretrained
+        return model_pretrained
 
