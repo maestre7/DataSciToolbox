@@ -2,34 +2,29 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 
-def comprobacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
+def eliminacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
     '''
-    Esta función calcula el número de outliers y su proporción con respecto al total en una columna numérica de un DataFrame de Pandas.
-    También muestra un gráfico boxplot utilizando la librería Seaborn para visualizar los outliers.
+    Esta función elimina las filas del DataFrame que contienen valores atípicos (outliers) en una columna especificada.
 
     Args:
     - dataframe: DataFrame de Pandas que contiene los datos.
-    - nombre_columna: Nombre de la columna para la cual se desea detectar los outliers. Se deberá indicar en formato string.
+    - nombre_columna: Nombre de la columna en la cual se desean eliminar las filas con outliers. Se deberá indicar en formato string.
 
     Return:
-    - Gráfico boxplot generado por Seaborn.
-    - Número de outliers en la columna especificada.
-    - Porcentaje de outliers en relación al total de datos.
+    - Devuelve el DataFrame sin los valores atípicos de la columna especificada.
     '''
+
     try:
         if not isinstance(nombre_columna, str):
             raise TypeError("El nombre de la columna debe ser un string.")
-            
-        df = dataframe[nombre_columna]
-        q1 = np.percentile(df, 25)
-        q3 = np.percentile(df, 75)
+        
+        df = dataframe.copy()
+        q1 = np.percentile(df[nombre_columna], 25)
+        q3 = np.percentile(df[nombre_columna], 75)
         rango_intercuartilico = q3 - q1 
-        outliers = df[(df < (q1 - 1.5 * rango_intercuartilico)) | (df > (q3 + 1.5 * rango_intercuartilico))]
+        df = df[(df[nombre_columna] >= (q1 - 1.5 * rango_intercuartilico)) & (df[nombre_columna] <= (q3 + 1.5 * rango_intercuartilico))]
 
-        print("El número de outliers es de:", len(outliers))
-        print("El porcentaje de Outliers es de:", round((len(outliers) / len(df)) * 100, 2), "%")
-
-        return sns.boxplot(data=dataframe, x=nombre_columna, orient="h")
+        return df
 
     except KeyError:
         print("Error: La columna especificada no existe en el DataFrame.")
