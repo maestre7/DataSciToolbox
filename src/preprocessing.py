@@ -401,6 +401,40 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
     except Exception as e:
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
+        
+def encoding_proporcional_target_binaria(dataframe: pd.DataFrame, target: str, columna_categorica: str, nueva_columna: str):
+    '''
+    Esta función realiza un encoding de una columna de tipo object en un DataFrame de pandas, creando una nueva columna. Esta función está diseñada para el contexto en el que la variable a predecir sea binaria.
+
+    El encoding se realiza proporcionalmente al peso que cada variable categórica tiene en el problema.
+
+    Argumentos:
+    - dataframe: DataFrame de pandas que contiene los datos.
+    - target: Nombre de la columna a predecir en el DataFrame. Debe ser binaria y se debe indicar como una cadena de texto.
+    - columna_categorica: Nombre de la columna categórica que se desea encodear. Se debe indicar como una cadena de texto.
+    - nueva_columna: Nombre de la nueva columna que contendrá los valores encodeados. Se debe indicar como una cadena de texto.
+    '''
+
+
+    if target not in dataframe.columns:
+        print("La columna target no existe en el DataFrame.")
+        return None
+
+    if columna_categorica not in dataframe.columns:
+        print("La columna columna_categorica no existe en el DataFrame.")
+        return None
+
+    if dataframe[target].nunique() != 2:
+        print("La columna target no es binaria.")
+        return None
+
+    try:
+        dict_proporcional = dict(dataframe.groupby(columna_categorica)[target].mean())
+        dataframe[nueva_columna] = dataframe[columna_categorica].map(dict_proporcional)
+        return dataframe
+    except (KeyError, TypeError) as e:
+        print("Ocurrió un error al codificar la columna categórica:", str(e))
+        return None
 
 def eliminacion_outliers(dataframe: pd.DataFrame, nombre_columna: str):
     '''
@@ -551,4 +585,5 @@ def limpiar_columnas_numericas(dataframe, columna, caracteres_especiales, valor_
     dataframe[columna] = columna_datos
     
     return dataframe
+
 
