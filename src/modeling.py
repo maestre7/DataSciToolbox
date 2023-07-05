@@ -3,36 +3,41 @@ from sklearn.model_selection import train_test_split
 
 def train_test_split_df(df, target_col, test_percent, random_state):
     """
-    Split a DataFrame into training and testing sets for machine learning.
+    Divide un DataFrame en conjuntos de entrenamiento y prueba para el aprendizaje automático.
 
-    Parameters:
-        df (pandas.DataFrame): The input DataFrame.
-        target_col (str): The name of the target column in the DataFrame.
-        test_percent (float): The percentage of data to use for testing (between 0 and 1).
-        random_state (int): The random state to ensure reproducibility.
+    Parámetros:
+        df (pandas.DataFrame): El DataFrame de entrada.
+        target_col (str): El nombre de la columna objetivo en el DataFrame.
+        test_percent (float): El porcentaje de datos para usar en la prueba (entre 0 y 1).
+        random_state (int): El estado aleatorio para garantizar la reproducibilidad.
 
-    Returns:
-        X_train (pandas.DataFrame): The training set features.
-        X_test (pandas.DataFrame): The testing set features.
-        y_train (pandas.Series): The training set target variable.
-        y_test (pandas.Series): The testing set target variable.
+    Retorna:
+        X_train (pandas.DataFrame): Las características del conjunto de entrenamiento.
+        X_test (pandas.DataFrame): Las características del conjunto de prueba.
+        y_train (pandas.Series): La variable objetivo del conjunto de entrenamiento.
+        y_test (pandas.Series): La variable objetivo del conjunto de prueba.
 
-    Prints:
-        Shape of each set to confirm dimension.
+    Imprime:
+        La forma de cada conjunto para confirmar la dimensión.
     """
-    # Separate features (X) and target variable (y)
-    X = df.drop(target_col, axis=1)
-    y = df[target_col]
+    try:
+        # Separar características (X) y variable objetivo (y)
+        X = df.drop(target_col, axis=1)
+        y = df[target_col]
 
-    # Split the data into train and test sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_percent, random_state=random_state)
+        # Dividir los datos en conjuntos de entrenamiento y prueba
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_percent, random_state=random_state)
 
-    print("Shape of X:", X.shape)
-    print("Shape of y:", y.shape)
+        print("Forma de X:", X.shape)
+        print("Forma de y:", y.shape)
 
-    print("Shape of X_train:", X_train.shape)
-    print("Shape of X_test:", X_test.shape)
-    print("Shape of y_train:", y_train.shape)
-    print("Shape of y_test:", y_test.shape) 
+        print("Forma de X_train:", X_train.shape)
+        print("Forma de X_test:", X_test.shape)
+        print("Forma de y_train:", y_train.shape)
+        print("Forma de y_test:", y_test.shape)
 
-    return X_train, X_test, y_train, y_test
+        return X_train, X_test, y_train, y_test
+
+    except Exception as e:
+        print("Error al dividir los datos en conjuntos de entrenamiento y prueba:", str(e))
+        return None, None, None, None
