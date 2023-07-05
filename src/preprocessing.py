@@ -3,7 +3,7 @@ import numpy as np
 import os
 from dateutil.relativedelta import relativedelta
 
-def segmentar_y_guardar(df, num_segmentos, output_folder):
+def segmentar_y_guardar(df:pd.DataFrame, num_segmentos:int, output_folder:str):
     """
     Segmenta un DataFrame en varios segmentos y los guarda en archivos CSV.
 
@@ -74,7 +74,7 @@ def calcular_edad(df: pd.DataFrame, columna_nacimiento: str, fecha_referencia: s
     
     import pandas as pd
 
-def obtener_hora_minuto_segundo(df, columna_hora):
+def obtener_hora_minuto_segundo(df:pd.DataFrame, columna_hora:str):
     """
     Calcula la hora, minuto y segundo en columnas separadas a partir de una columna de hora en un DataFrame.
 
