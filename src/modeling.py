@@ -415,3 +415,99 @@ def balance_target_column_smote(df, target_column):
     except Exception as e:
         print("Error al equilibrar la columna objetivo:", str(e))
         return None
+    
+
+def reductor_calidad(path_imagen:str,n:int):
+    
+    """
+    Función para hacer reducir el tamaño de memoria que ocupa una imagen reduciendo el numero de colores de ésta. 
+
+    Args:
+        path_imagen (str): El data frame que se quiere modelar.
+        n (int): Número de colores total del que se desea la foto.
+
+    Returns:
+        None
+
+    """
+    try:
+
+        imagen = Image.open(path_imagen)
+        imagen_1 = np.asarray(imagen,dtype=np.float32)/255
+
+        w, h = imagen.size
+        colors = imagen.getcolors(w * h)
+        num_colores_0 = len(colors) 
+        num_pixels_0 = w*h 
+        
+        R = imagen_1[:,:,0]
+        G = imagen_1[:,:,1]
+        B = imagen_1[:,:,2]
+        XR = R.reshape((-1, 1))  
+        XG = G.reshape((-1, 1)) 
+        XB = B.reshape((-1, 1)) 
+        X = np.concatenate((XR,XG,XB),axis=1)
+        
+        k_means = KMeans(n_clusters=n)
+        k_means.fit(X)
+        centroides = k_means.cluster_centers_
+        etiquetas = k_means.labels_
+        m = XR.shape
+        for i in range(m[0]):
+            XR[i] = centroides[etiquetas[i]][0] 
+            XG[i] = centroides[etiquetas[i]][1] 
+            XB[i] = centroides[etiquetas[i]][2] 
+        XR.shape = R.shape 
+        XG.shape = G.shape
+        XB.shape = B.shape 
+        XR = XR[:, :, np.newaxis]  
+        XG = XG[:, :, np.newaxis]
+        XB = XB[:, :, np.newaxis]
+        Y = np.concatenate((XR,XG,XB),axis=2)
+        
+        plt.figure(figsize=(12,12))
+        plt.imshow(Y)
+        plt.axis('off')
+        plt.show()
+
+        print (u'Número de colores iniciales = ', num_colores_0)
+        print (u'Número de colores finales = ', n)
+
+    except Exception as e:
+        error_message = "Fallo: " + str(e)
+        print(error_message)
+
+    return None
+
+
+
+def ByN(path_imagen:str):
+
+    """
+    Función que devuelve la misma imagen que se introduce pero en blanco y negro.
+
+    Args:
+        path_imagen (str): La dirección de la imagen.
+        
+    Returns:
+        None
+
+    """
+    try:
+
+        imagen = Image.open(path_imagen)
+
+        
+        imagen = imagen.convert('L')
+        imagen_2 = np.asarray(imagen,dtype=np.float)
+
+        plt.figure(figsize=(8,8))
+        plt.imshow(imagen_2,cmap='gray')
+        plt.axis('off')
+        plt.show()
+
+    except Exception as e:
+        error_message = "Fallo: " + str(e)
+        print(error_message)
+
+    return None

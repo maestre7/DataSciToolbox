@@ -7,6 +7,7 @@ from typing import Union
 import sys
 import rarfile
 import zipfile
+import yfinance as yf
 
 def segmentar_y_guardar(df: pd.DataFrame, num_segmentos:int, output_folder:str):
     """
@@ -136,6 +137,7 @@ class ReduceMemory:
     def __init__(self) -> None:
         self.before_size = 0
         self.after_size = 0
+        self.sumary = {}
 
     def process(self, data_df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -148,22 +150,44 @@ class ReduceMemory:
         Returns:
             pd.DataFrame: DataFrame de Pandas con el consumo de memoria reducido.
         """
-        cols = data_df.columns
+        
+        try:
+            self.sumary = {}
+            cols = data_df.columns
 
-        for col in cols:
-            try:
+            for col in cols:
                 dtype = data_df[col].dtype
 
                 if dtype == 'object':
                     data_df[col] = self.reduce_object(data_df[col])
+                    self.sumary_size(col)
                 elif dtype == 'float':
                     data_df[col] = self.reduce_float(data_df[col])
+                    self.sumary_size(col)
                 elif dtype == 'int':
                     data_df[col] = self.reduce_int(data_df[col])
-            except Exception as e:
-                print(f"Error processing column '{col}': {str(e)}")
+                    self.sumary_size(col)
+
+        except Exception as err:
+            print(f"Error processing column '{col}': {str(err)}")
+            return False
 
         return data_df
+    
+    def sumary_size(self, col: str):
+        """
+        Registra el resumen del tamaño antes y después de la reducción de una columna.
+
+        Args:
+            col (str): Nombre de la columna.
+        """
+
+        try:
+            self.sumary[col] = {"before_size": self.before_size, 
+                                "after_size": self.after_size,}
+        except Exception as err:
+            print(f"Error sumary_size '{col}': {str(err)}")
+
 
     def reduce_object(self, data_serie: pd.Series) -> pd.Series:
         """
@@ -176,6 +200,7 @@ class ReduceMemory:
         Returns:
             pd.Series: Columna de tipo entero con el consumo de memoria reducido.
         """
+
         try:
             self.before_size = round(sys.getsizeof(data_serie) / 1024 ** 2,2)
                     
@@ -189,7 +214,7 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing object column: {str(err)}")
-            return data_serie
+            return False
 
     def reduce_float(self, data_serie: pd.Series) -> pd.Series:
         """
@@ -219,7 +244,7 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing float column: {str(err)}")
-            return data_serie
+            return False
 
     def reduce_int(self, data_serie: pd.Series) -> pd.Series:
         """
@@ -234,11 +259,11 @@ class ReduceMemory:
         try:
             self.before_size = round(sys.getsizeof(data_serie) / 1024 ** 2,2)
                     
-            min_value,max_value = data_serie.min(), data_serie.max()
+            min_value, max_value = data_serie.min(), data_serie.max()
             
             if min_value >= np.iinfo('int8').min and max_value <= np.iinfo('int8').max:
                 data_serie = data_serie.astype('int8')
-            if min_value >= np.iinfo('int16').min and max_value <= np.iinfo('int16').max:
+            elif min_value >= np.iinfo('int16').min and max_value <= np.iinfo('int16').max:
                 data_serie = data_serie.astype('int16')
             elif min_value >= np.iinfo('int32').min and max_value <= np.iinfo('int32').max:
                 data_serie = data_serie.astype('int32')
@@ -251,7 +276,6 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing int column: {str(err)}")
-
             return data_serie      
 
 def leer_csv_desde_rar(ruta_archivo:str, nombre_archivo_csv:str) -> pd.DataFrame:
@@ -377,3 +401,90 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
     except Exception as e:
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
+
+
+def cambiar_nombres_columnas(df, **kwargs):
+    """
+    Cambia los nombres de las columnas de un DataFrame.
+
+    Parámetros de entrada:
+        - df: DataFrame. El dataframe en el que se cambiarán los nombres de las columnas.
+        - **kwargs: Diccionario de argumentos clave-valor donde la clave representa el nombre actual de la columna
+                    y el valor representa el nuevo nombre de la columna.
+
+    Retorna:
+        DataFrame. El dataframe con los nombres de las columnas modificados.
+
+    Ejemplo:
+        df = cambiar_nombres_columnas(df, columna1='nueva_columna1', columna2='nueva_columna2')
+    """
+    try:
+        
+        for columna_actual in kwargs.keys():
+            if columna_actual not in df.columns:
+                raise ValueError(f"La columna '{columna_actual}' no existe en el DataFrame.")
+
+        
+        df = df.rename(columns=kwargs)
+
+    except Exception as e:
+        print(f"Error al cambiar los nombres de las columnas: {e}")
+
+    return df
+
+def create_dataframe_yahoo_finance(symbol):
+    """
+    Crea un DataFrame a partir de los datos descargados de Yahoo Finance para un símbolo específico.
+
+    Parámetros de entrada:
+        - symbol: str. El símbolo del activo financiero para el cual se desea obtener los datos.
+
+    Retorna:
+        DataFrame. El dataframe con los datos descargados de Yahoo Finance.
+
+    """
+    try:
+        data = yf.download(symbol)
+        df = pd.DataFrame(data)
+        return df
+    except Exception as e:
+        print(f"Error al descargar los datos de Yahoo Finance para el símbolo {symbol}: {str(e)}")
+        return None
+
+def limpiar_columnas_numericas(dataframe, columna, caracteres_especiales, valor_reemplazo):
+    """
+    Limpia una columna de un DataFrame, reemplazando los caracteres especiales inválidos
+    por un valor de reemplazo dado.
+
+    Args:
+        dataframe (pandas.DataFrame): El DataFrame que contiene la columna a limpiar.
+        columna (str): El nombre de la columna a limpiar.
+        caracteres_especiales (list): Lista de caracteres especiales inválidos.
+        valor_reemplazo (str): Valor utilizado para reemplazar los caracteres especiales.
+
+    Returns:
+        pandas.DataFrame: El DataFrame con la columna limpia.
+
+    Raises:
+        Exception: Si se encuentra un caracter especial inválido en la columna.
+    """
+   
+    columna_datos = dataframe[columna]
+    
+    for i, dato in enumerate(columna_datos):
+        try:
+            for caracter in caracteres_especiales:
+                if caracter in dato:
+                    raise Exception("Se encontró un caracter especial inválido en la columna.")
+            
+            for caracter in caracteres_especiales:
+                dato = dato.replace(caracter, valor_reemplazo)
+            
+            columna_datos[i] = dato
+        
+        except Exception as e:
+            print(f"Error: {str(e)}")
+    
+    dataframe[columna] = columna_datos
+    
+    return dataframe
