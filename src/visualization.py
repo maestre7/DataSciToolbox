@@ -236,7 +236,7 @@ def dist_variables(data: pd.DataFrame, target: str = None, ncols: int = 2, figsi
         print(error_message)
         return None
     
-def plot_quality_counts(dataframe: pd.DataFrame, column:str, color:str) -> None:
+def plot_quality_counts(dataframe: pd.DataFrame, column: str, color: str) -> None:
     """Crea un gráfico de barras que muestra el recuento de valores en una columna específica.
     
     Args:
@@ -244,33 +244,40 @@ def plot_quality_counts(dataframe: pd.DataFrame, column:str, color:str) -> None:
         column (str): El nombre de la columna para la cual se desea hacer el gráfico de barras.
         color (str): El color de las barras del gráfico.
     """
-    # Crea el gráfico de barras utilizando value_counts() y plot.bar()
-    dataframe[column].value_counts().plot.bar(rot=0, color=color)
-    
-    # Personaliza el gráfico
-    plt.ylabel('Recuento')
-    plt.xlabel(column)
-    
-    # Muestra el gráfico
-    plt.show()
+    try:
+        # Crea el gráfico de barras utilizando value_counts() y plot.bar()
+        dataframe[column].value_counts().plot.bar(rot=0, color=color)
+        
+        # Personaliza el gráfico
+        plt.ylabel('Recuento')
+        plt.xlabel(column)
+        
+        # Muestra el gráfico
+        plt.show()
+    except KeyError:
+        print(f"La columna '{column}' no existe en el DataFrame.")
+    except Exception as e:
+        print(f"Ocurrió un error: {str(e)}")
 
 
-def plot_heatmap(dataframe: pd.DataFrame, figsize:tuple) -> None:
+def plot_heatmap(dataframe: pd.DataFrame, figsize: tuple) -> None:
     """Crea un mapa de calor (heatmap) a partir de un DataFrame.
     
     Args:
         dataframe (pd.DataFrame): El DataFrame que contiene los datos.
         figsize (tuple): El tamaño de la figura del heatmap en pulgadas (ancho, alto).
     """
-    
-    # Configurar el tamaño de la figura
-    plt.figure(figsize=figsize)
-    
-    # Crear el mapa de calor utilizando sns.heatmap()
-    sns.heatmap(dataframe.corr(), annot=True)
-    
-    # Mostrar el mapa de calor
-    plt.show()
+    try:
+        # Configurar el tamaño de la figura
+        plt.figure(figsize=figsize)
+        
+        # Crear el mapa de calor utilizando sns.heatmap()
+        sns.heatmap(dataframe.corr(), annot=True)
+        
+        # Mostrar el mapa de calor
+        plt.show()
+    except Exception as e:
+        print(f"Ocurrió un error: {str(e)}")
 
 
 def plot_data(dataframe: pd.DataFrame, x: str, y: str, plot_type: str) -> None:
@@ -282,27 +289,30 @@ def plot_data(dataframe: pd.DataFrame, x: str, y: str, plot_type: str) -> None:
         y (str): La columna del DataFrame para el eje y.
         plot_type (str): El tipo de gráfico a crear ('violin', 'scatter', 'bar', etc.).
     """
-    if plot_type == 'violin':
-        # Violin plot
-        sns.violinplot(x=x, y=y, data=dataframe)
-        plt.xlabel(x)
-        plt.ylabel(y)
-        plt.title('Violin Plot')
-    
-    elif plot_type == 'scatter':
-        # Scatter plot
-        plt.scatter(dataframe[x], dataframe[y])
-        plt.xlabel(x)
-        plt.ylabel(y)
-        plt.title('Scatter Plot')
-    
-    elif plot_type == 'bar':
-        # Bar plot
-        sns.barplot(x=x, y=y, data=dataframe)
-        plt.xlabel(x)
-        plt.ylabel(y)
-        plt.title('Bar Plot')
-    
-    # Agregar más tipos de gráficos según sea necesario
-    
-    plt.show()
+    try:
+        if plot_type == 'violin':
+            # Violin plot
+            sns.violinplot(x=x, y=y, data=dataframe)
+            plt.xlabel(x)
+            plt.ylabel(y)
+            plt.title('Violin Plot')
+        
+        elif plot_type == 'scatter':
+            # Scatter plot
+            plt.scatter(dataframe[x], dataframe[y])
+            plt.xlabel(x)
+            plt.ylabel(y)
+            plt.title('Scatter Plot')
+        
+        elif plot_type == 'bar':
+            # Bar plot
+            sns.barplot(x=x, y=y, data=dataframe)
+            plt.xlabel(x)
+            plt.ylabel(y)
+            plt.title('Bar Plot')
+        
+        # Agregar más tipos de gráficos según sea necesario
+        
+        plt.show()
+    except Exception as e:
+        print(f"Ocurrió un error: {str(e)}")
