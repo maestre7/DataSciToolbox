@@ -1,6 +1,6 @@
 # DataSciToolbox
 
-![portada](documentation\logo_dstb.png)
+![portada](documentation/logo_dstb.png)
 
 <p align="center">
   <a href="#Introducción">Introducción</a> •
