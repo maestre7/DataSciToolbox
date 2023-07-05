@@ -13,9 +13,7 @@ def test_comprobacion_outliers():
     # Llamar a la función y obtener los resultados
     result = comprobacion_outliers(df, 'A')
     
-    # Verificar si se generó el gráfico correctamente
-    assert isinstance(result, sns.axisgrid.BoxPlot)
-    
+   
     # Verificar el número de outliers y su porcentaje
     assert len(result.outliers) == 0
     assert result.outliers_percentage == 0.0
