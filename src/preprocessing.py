@@ -3,7 +3,7 @@ import numpy as np
 
 def eliminacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
     '''
-    Esta función elimina las filas del DataFrame que contienen valores atípicos (outliers) en una columna especificada.
+    Esta función elimina las filas del DataFrame que contienen valores atípicos (outliers) en una columna especifica.
 
     Args:
     - dataframe: DataFrame de Pandas que contiene los datos.
