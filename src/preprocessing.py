@@ -260,14 +260,12 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
 def comprobacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
     '''
     Esta función calcula el número de outliers y su proporción con respecto al total en una columna numérica de un DataFrame de Pandas.
-    También muestra un gráfico boxplot utilizando la librería Seaborn para visualizar los outliers.
 
     Args:
     - dataframe: DataFrame de Pandas que contiene los datos.
     - nombre_columna: Nombre de la columna para la cual se desea detectar los outliers. Se deberá indicar en formato string.
 
     Return:
-    - Gráfico boxplot generado por Seaborn.
     - Número de outliers en la columna especificada.
     - Porcentaje de outliers en relación al total de datos.
     '''
@@ -281,10 +279,7 @@ def comprobacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
         rango_intercuartilico = q3 - q1 
         outliers = df[(df < (q1 - 1.5 * rango_intercuartilico)) | (df > (q3 + 1.5 * rango_intercuartilico))]
 
-        print("El número de outliers es de:", len(outliers))
-        print("El porcentaje de Outliers es de:", round((len(outliers) / len(df)) * 100, 2), "%")
-
-        return sns.boxplot(data=dataframe, x=nombre_columna, orient="h")
+        return print("El número de outliers es de:", len(outliers)),"y el porcentaje de Outliers es de:", round((len(outliers) / len(df)) * 100, 2), "%")
 
     except KeyError:
         print("Error: La columna especificada no existe en el DataFrame.")
