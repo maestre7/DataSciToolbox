@@ -7,6 +7,7 @@ from typing import Union
 import sys
 import rarfile
 import zipfile
+import yfinance as yf
 
 def segmentar_y_guardar(df: pd.DataFrame, num_segmentos:int, output_folder:str):
     """
@@ -136,6 +137,7 @@ class ReduceMemory:
     def __init__(self) -> None:
         self.before_size = 0
         self.after_size = 0
+        self.sumary = {}
 
     def process(self, data_df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -148,22 +150,44 @@ class ReduceMemory:
         Returns:
             pd.DataFrame: DataFrame de Pandas con el consumo de memoria reducido.
         """
-        cols = data_df.columns
+        
+        try:
+            self.sumary = {}
+            cols = data_df.columns
 
-        for col in cols:
-            try:
+            for col in cols:
                 dtype = data_df[col].dtype
 
                 if dtype == 'object':
                     data_df[col] = self.reduce_object(data_df[col])
+                    self.sumary_size(col)
                 elif dtype == 'float':
                     data_df[col] = self.reduce_float(data_df[col])
+                    self.sumary_size(col)
                 elif dtype == 'int':
                     data_df[col] = self.reduce_int(data_df[col])
-            except Exception as e:
-                print(f"Error processing column '{col}': {str(e)}")
+                    self.sumary_size(col)
+
+        except Exception as err:
+            print(f"Error processing column '{col}': {str(err)}")
+            return False
 
         return data_df
+    
+    def sumary_size(self, col: str):
+        """
+        Registra el resumen del tamaño antes y después de la reducción de una columna.
+
+        Args:
+            col (str): Nombre de la columna.
+        """
+
+        try:
+            self.sumary[col] = {"before_size": self.before_size, 
+                                "after_size": self.after_size,}
+        except Exception as err:
+            print(f"Error sumary_size '{col}': {str(err)}")
+
 
     def reduce_object(self, data_serie: pd.Series) -> pd.Series:
         """
@@ -176,6 +200,7 @@ class ReduceMemory:
         Returns:
             pd.Series: Columna de tipo entero con el consumo de memoria reducido.
         """
+
         try:
             self.before_size = round(sys.getsizeof(data_serie) / 1024 ** 2,2)
                     
@@ -189,7 +214,7 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing object column: {str(err)}")
-            return data_serie
+            return False
 
     def reduce_float(self, data_serie: pd.Series) -> pd.Series:
         """
@@ -219,7 +244,7 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing float column: {str(err)}")
-            return data_serie
+            return False
 
     def reduce_int(self, data_serie: pd.Series) -> pd.Series:
         """
@@ -234,11 +259,11 @@ class ReduceMemory:
         try:
             self.before_size = round(sys.getsizeof(data_serie) / 1024 ** 2,2)
                     
-            min_value,max_value = data_serie.min(), data_serie.max()
+            min_value, max_value = data_serie.min(), data_serie.max()
             
             if min_value >= np.iinfo('int8').min and max_value <= np.iinfo('int8').max:
                 data_serie = data_serie.astype('int8')
-            if min_value >= np.iinfo('int16').min and max_value <= np.iinfo('int16').max:
+            elif min_value >= np.iinfo('int16').min and max_value <= np.iinfo('int16').max:
                 data_serie = data_serie.astype('int16')
             elif min_value >= np.iinfo('int32').min and max_value <= np.iinfo('int32').max:
                 data_serie = data_serie.astype('int32')
@@ -251,7 +276,6 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing int column: {str(err)}")
-
             return data_serie      
 
 def leer_csv_desde_rar(ruta_archivo:str, nombre_archivo_csv:str) -> pd.DataFrame:
@@ -378,6 +402,7 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
 
+
 def cambiar_nombres_columnas(df, **kwargs):
     """
     Cambia los nombres de las columnas de un DataFrame.
@@ -406,9 +431,6 @@ def cambiar_nombres_columnas(df, **kwargs):
         print(f"Error al cambiar los nombres de las columnas: {e}")
 
     return df
-
-
-import yfinance as yf
 
 def create_dataframe_yahoo_finance(symbol):
     """
