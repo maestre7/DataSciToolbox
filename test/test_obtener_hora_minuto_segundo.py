@@ -4,11 +4,7 @@ from dateutil.relativedelta import relativedelta
 import os
 import sys
 
-# Agregar el directorio raíz del proyecto a la ruta de búsqueda de módulos
-root_dir = os.path.dirname(os.path.dirname(os.path.abspath('preprocessing.py')))
-sys.path.append(root_dir)
-
-from src.preprocessing import obtener_hora_minuto_segundo
+from preprocessing import obtener_hora_minuto_segundo
 
 @pytest.fixture
 def ejemplo_dataframe():
