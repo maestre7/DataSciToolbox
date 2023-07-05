@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 
 
-from preprocessing import tratar_valores_nulos
+from src.preprocessing import tratar_valores_nulos
 
 def test_tratar_valores_nulos():
     # Crear un DataFrame de prueba con valores nulos

@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 import seaborn as sns
 
-from visualization import plot_scatter_with_reference
+from src.visualization import plot_scatter_with_reference
 
 def test_plot_scatter_with_reference():
     # Generar datos de prueba
