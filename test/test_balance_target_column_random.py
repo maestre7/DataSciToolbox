@@ -1,3 +1,5 @@
+import pytest
+
 import pandas as pd
 from sklearn.utils import shuffle
 from imblearn.over_sampling import RandomOverSampler
