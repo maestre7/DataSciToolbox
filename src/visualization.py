@@ -104,4 +104,50 @@ def plot_pca_importance (data, modelo_pca):
     
     except Exception as e:
         print("Ocurrió un error en plot_pca_importance:", str(e))
-    ax.set_ylabel('Por. varianza explicada')
+
+
+def plot_pca_importance_agg (data, modelo_pca):
+    '''
+    Genera un gráfico de línea que muestra el porcentaje acumulado de varianza explicada por cada componente principal
+    en un modelo de PCA.
+
+    Parámetros:
+    - data: El conjunto de datos utilizado en el modelo de PCA.
+    - modelo_pca: El objeto del modelo de PCA entrenado.
+
+    Retorna:
+    - fig: El objeto Figure del gráfico generado.
+
+    '''
+    try:
+        prop_varianza_acum = modelo_pca.explained_variance_ratio_.cumsum()
+
+        fig, ax = plt.subplots(nrows=1, ncols=1)
+        ax.plot(
+            np.arange(len(data.columns)) + 1,
+            prop_varianza_acum,
+            marker = 'o'
+        )
+
+        for x, y in zip(np.arange(len(data.columns)) + 1, prop_varianza_acum):
+            label = round(y, 2)
+            ax.annotate(
+                label,
+                (x,y),
+                textcoords="offset points",
+                xytext=(0,10),
+                ha='center'
+            )
+            
+        ax.set_ylim(0, 1.1)
+        ax.set_xticks(np.arange(modelo_pca.n_components_) + 1)
+        ax.set_title('Porcentaje de varianza explicada acumulada')
+        ax.set_xlabel('Componente principal')
+        ax.set_ylabel('% varianza acumulada')
+
+        fig.show()
+
+        return fig
+    
+    except Exception as e:
+        print("Ocurrió un error en plot_pca_importance_agg:", str(e))
