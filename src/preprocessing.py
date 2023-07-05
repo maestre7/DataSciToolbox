@@ -289,7 +289,7 @@ def cambiar_nombres_columnas(df, **kwargs):
 
     return df
 
-import pandas as pd
+
 import yfinance as yf
 
 def create_dataframe_yahoo_finance(symbol):
