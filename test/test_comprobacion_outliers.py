@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 
 # Importa la función que deseas probar
-from comprobacion_outliers import comprobacion_outliers
+from src.preprocessing import comprobacion_outliers
 
 # Fixture para generar un DataFrame de prueba
 @pytest.fixture
