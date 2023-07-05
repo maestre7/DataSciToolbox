@@ -3,11 +3,7 @@ import pytest
 import os
 import sys
 
-# Agregar el directorio raíz del proyecto a la ruta de búsqueda de módulos
-root_dir = os.path.dirname(os.path.dirname(os.path.abspath('preprocessing.py')))
-sys.path.append(root_dir)
-
-from src.preprocessing import eliminar_unidades_metricas
+from preprocessing import eliminar_unidades_metricas
 
 @pytest.fixture
 def sample_dataframe():
