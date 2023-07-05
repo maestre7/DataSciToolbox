@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from preprocessing import create_dataframe_yahoo_finance
+from src.preprocessing import create_dataframe_yahoo_finance
 
 def test_create_dataframe_yahoo_finance():
     # Símbolo válido
