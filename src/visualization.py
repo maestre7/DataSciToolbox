@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
 def plot_moving_averages (data:pd.DataFrame, feature:str, medias_moviles=None, colores=None):
@@ -58,3 +60,48 @@ def plot_moving_averages (data:pd.DataFrame, feature:str, medias_moviles=None, c
     
     except Exception as e:
         print("Error en la función plot_moving_averages:", str(e))
+
+
+def plot_pca_importance (data, modelo_pca):
+    '''
+    Genera un gráfico de barras que muestra el porcentaje de varianza explicada por cada componente principal
+    en un modelo de PCA.
+
+    Parámetros:
+    - data: El conjunto de datos utilizado en el modelo de PCA.
+    - modelo_pca: El objeto del modelo de PCA entrenado.
+
+    Retorna:
+    - fig: El objeto Figure del gráfico generado.
+
+    '''
+    try:
+        fig, ax = plt.subplots(nrows=1, ncols=1)
+        ax.bar(
+            x      = np.arange(modelo_pca.n_components_) + 1,
+            height = modelo_pca.explained_variance_ratio_
+        )
+
+        for x, y in zip(np.arange(len(data.columns)) + 1, modelo_pca.explained_variance_ratio_):
+            label = round(y, 2)
+            ax.annotate(
+                label,
+                (x,y),
+                textcoords="offset points",
+                xytext=(0,10),
+                ha='center'
+            )
+
+        ax.set_xticks(np.arange(modelo_pca.n_components_) + 1)
+        ax.set_ylim(0, 1.1)
+        ax.set_title('Porcentaje de varianza explicada por cada componente')
+        ax.set_xlabel('Componente principal')
+        ax.set_ylabel('Por. varianza explicada')
+
+        fig.show()
+
+        return fig
+    
+    except Exception as e:
+        print("Ocurrió un error en plot_pca_importance:", str(e))
+    ax.set_ylabel('Por. varianza explicada')
