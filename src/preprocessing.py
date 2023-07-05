@@ -7,6 +7,7 @@ from typing import Union
 import sys
 import rarfile
 import zipfile
+import yfinance as yf
 
 def segmentar_y_guardar(df: pd.DataFrame, num_segmentos:int, output_folder:str):
     """
@@ -136,6 +137,7 @@ class ReduceMemory:
     def __init__(self) -> None:
         self.before_size = 0
         self.after_size = 0
+        self.sumary = {}
 
     def process(self, data_df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -148,22 +150,44 @@ class ReduceMemory:
         Returns:
             pd.DataFrame: DataFrame de Pandas con el consumo de memoria reducido.
         """
-        cols = data_df.columns
+        
+        try:
+            self.sumary = {}
+            cols = data_df.columns
 
-        for col in cols:
-            try:
+            for col in cols:
                 dtype = data_df[col].dtype
 
                 if dtype == 'object':
                     data_df[col] = self.reduce_object(data_df[col])
+                    self.sumary_size(col)
                 elif dtype == 'float':
                     data_df[col] = self.reduce_float(data_df[col])
+                    self.sumary_size(col)
                 elif dtype == 'int':
                     data_df[col] = self.reduce_int(data_df[col])
-            except Exception as e:
-                print(f"Error processing column '{col}': {str(e)}")
+                    self.sumary_size(col)
+
+        except Exception as err:
+            print(f"Error processing column '{col}': {str(err)}")
+            return False
 
         return data_df
+    
+    def sumary_size(self, col: str):
+        """
+        Registra el resumen del tamaño antes y después de la reducción de una columna.
+
+        Args:
+            col (str): Nombre de la columna.
+        """
+
+        try:
+            self.sumary[col] = {"before_size": self.before_size, 
+                                "after_size": self.after_size,}
+        except Exception as err:
+            print(f"Error sumary_size '{col}': {str(err)}")
+
 
     def reduce_object(self, data_serie: pd.Series) -> pd.Series:
         """
@@ -176,6 +200,7 @@ class ReduceMemory:
         Returns:
             pd.Series: Columna de tipo entero con el consumo de memoria reducido.
         """
+
         try:
             self.before_size = round(sys.getsizeof(data_serie) / 1024 ** 2,2)
                     
@@ -189,7 +214,7 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing object column: {str(err)}")
-            return data_serie
+            return False
 
     def reduce_float(self, data_serie: pd.Series) -> pd.Series:
         """
@@ -219,7 +244,7 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing float column: {str(err)}")
-            return data_serie
+            return False
 
     def reduce_int(self, data_serie: pd.Series) -> pd.Series:
         """
@@ -234,11 +259,11 @@ class ReduceMemory:
         try:
             self.before_size = round(sys.getsizeof(data_serie) / 1024 ** 2,2)
                     
-            min_value,max_value = data_serie.min(), data_serie.max()
+            min_value, max_value = data_serie.min(), data_serie.max()
             
             if min_value >= np.iinfo('int8').min and max_value <= np.iinfo('int8').max:
                 data_serie = data_serie.astype('int8')
-            if min_value >= np.iinfo('int16').min and max_value <= np.iinfo('int16').max:
+            elif min_value >= np.iinfo('int16').min and max_value <= np.iinfo('int16').max:
                 data_serie = data_serie.astype('int16')
             elif min_value >= np.iinfo('int32').min and max_value <= np.iinfo('int32').max:
                 data_serie = data_serie.astype('int32')
@@ -251,7 +276,6 @@ class ReduceMemory:
         
         except Exception as err:
             print(f"Error reducing int column: {str(err)}")
-
             return data_serie      
 
 def leer_csv_desde_rar(ruta_archivo:str, nombre_archivo_csv:str) -> pd.DataFrame:
@@ -377,6 +401,104 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
     except Exception as e:
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
+        
+def encoding_proporcional_target_binaria(dataframe: pd.DataFrame, target: str, columna_categorica: str, nueva_columna: str):
+    '''
+    Esta función realiza un encoding de una columna de tipo object en un DataFrame de pandas, creando una nueva columna. Esta función está diseñada para el contexto en el que la variable a predecir sea binaria.
+
+    El encoding se realiza proporcionalmente al peso que cada variable categórica tiene en el problema.
+
+    Argumentos:
+    - dataframe: DataFrame de pandas que contiene los datos.
+    - target: Nombre de la columna a predecir en el DataFrame. Debe ser binaria y se debe indicar como una cadena de texto.
+    - columna_categorica: Nombre de la columna categórica que se desea encodear. Se debe indicar como una cadena de texto.
+    - nueva_columna: Nombre de la nueva columna que contendrá los valores encodeados. Se debe indicar como una cadena de texto.
+    '''
+
+
+    if target not in dataframe.columns:
+        print("La columna target no existe en el DataFrame.")
+        return None
+
+    if columna_categorica not in dataframe.columns:
+        print("La columna columna_categorica no existe en el DataFrame.")
+        return None
+
+    if dataframe[target].nunique() != 2:
+        print("La columna target no es binaria.")
+        return None
+
+    try:
+        dict_proporcional = dict(dataframe.groupby(columna_categorica)[target].mean())
+        dataframe[nueva_columna] = dataframe[columna_categorica].map(dict_proporcional)
+        return dataframe
+    except (KeyError, TypeError) as e:
+        print("Ocurrió un error al codificar la columna categórica:", str(e))
+        return None
+
+def eliminacion_outliers(dataframe: pd.DataFrame, nombre_columna: str):
+    '''
+    Esta función elimina las filas del DataFrame que contienen valores atípicos (outliers) en una columna especificada.
+
+    Args:
+    - dataframe: DataFrame de Pandas que contiene los datos.
+    - nombre_columna: Nombre de la columna en la cual se desean eliminar las filas con outliers. Se deberá indicar en formato string.
+
+    Return:
+    - Devuelve el DataFrame sin los valores atípicos de la columna especificada.
+    '''
+
+    if not isinstance(nombre_columna, str):
+        raise TypeError("El nombre de la columna debe ser un string.")
+
+    if nombre_columna not in dataframe.columns:
+        raise KeyError("La columna especificada no existe en el DataFrame.")
+
+    df = dataframe.copy()
+    q1 = np.percentile(df[nombre_columna], 25)
+    q3 = np.percentile(df[nombre_columna], 75)
+    rango_intercuartilico = q3 - q1
+    df = df[(df[nombre_columna] >= (q1 - 1.5 * rango_intercuartilico)) & (df[nombre_columna] <= (q3 + 1.5 * rango_intercuartilico))]
+
+    return df
+
+def comprobacion_outliers(dataframe: pd.DataFrame, nombre_columna: str) -> dict:
+    '''
+    Esta función calcula el número de outliers y su proporción con respecto al total en una columna numérica de un DataFrame de Pandas.
+
+    Args:
+    - dataframe: DataFrame de Pandas que contiene los datos.
+    - nombre_columna: Nombre de la columna para la cual se desea detectar los outliers. Se deberá indicar en formato string.
+
+    Return:
+    - Diccionario con el número de outliers en la columna especificada y el porcentaje de outliers en relación al total de datos.
+    '''
+    try:
+        if not isinstance(nombre_columna, str):
+            raise TypeError("El nombre de la columna debe ser un string.")
+            
+        df = dataframe[nombre_columna]
+        q1 = np.percentile(df, 25)
+        q3 = np.percentile(df, 75)
+        rango_intercuartilico = q3 - q1 
+        outliers = df[(df < (q1 - 1.5 * rango_intercuartilico)) | (df > (q3 + 1.5 * rango_intercuartilico))]
+        num_outliers = len(outliers)
+        porcentaje_outliers = round((num_outliers / len(df)) * 100, 2)
+        
+        result = {
+            "numero_outliers": num_outliers,
+            "porcentaje_outliers": porcentaje_outliers
+        }
+        
+        return result
+
+    except KeyError:
+        raise KeyError("Error: La columna especificada no existe en el DataFrame.")
+    except TypeError as e:
+        raise TypeError("Error: " + str(e))
+    except Exception as e:
+        raise Exception("Error: Se produjo un problema al procesar la función. Por favor, revisa la documentación de la función, verifica que los parámetros de entrada estén correctamente indicados y revisa los datos de tu DataFrame.")
+
 
 def cambiar_nombres_columnas(df, **kwargs):
     """
@@ -406,9 +528,6 @@ def cambiar_nombres_columnas(df, **kwargs):
         print(f"Error al cambiar los nombres de las columnas: {e}")
 
     return df
-
-
-import yfinance as yf
 
 def create_dataframe_yahoo_finance(symbol):
     """
@@ -466,3 +585,5 @@ def limpiar_columnas_numericas(dataframe, columna, caracteres_especiales, valor_
     dataframe[columna] = columna_datos
     
     return dataframe
+
+
