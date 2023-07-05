@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from preprocessing import comprobacion_outliers
+from src.preprocessing import comprobacion_outliers
 
 def test_comprobacion_outliers():
     # Crear un DataFrame de ejemplo
