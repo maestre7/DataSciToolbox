@@ -1,7 +1,7 @@
 import os
 import pickle
 import warnings
-from modeling import save_model
+from src.modeling import save_model
 
 
 def export_import_model(model, path_model, name, save=True, open=False):
