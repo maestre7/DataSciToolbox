@@ -3,7 +3,7 @@ import numpy as np
 import os
 from dateutil.relativedelta import relativedelta
 
-def segmentar_y_guardar(df, num_segmentos, output_folder):
+def segmentar_y_guardar(df: pd.DataFrame, num_segmentos: int, output_folder: str):
     """
     Segmenta un DataFrame en varios segmentos y los guarda en archivos CSV.
 

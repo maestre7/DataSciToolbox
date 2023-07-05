@@ -4,6 +4,11 @@ from dateutil.relativedelta import relativedelta
 import os
 import sys
 
+# Agregar el directorio raíz del proyecto a la ruta de búsqueda de módulos
+root_dir = os.path.dirname(os.path.dirname(os.path.abspath('preprocessing.py')))
+sys.path.append(root_dir)
+
+
 from preprocessing import calcular_edad
 
 @pytest.fixture
