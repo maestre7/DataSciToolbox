@@ -2,7 +2,7 @@ import os
 import pickle
 import warnings
 from src.modeling import save_model
-
+import pytest
 
 def export_import_model(model, path_model, name, save=True, open=False):
     '''
