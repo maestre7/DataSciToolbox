@@ -270,6 +270,18 @@ def encoding_proporcional_target_binaria(dataframe: pd.DataFrame, target: str, c
     - nueva_columna: Nombre de la nueva columna que contendrá los valores encodeados. Se debe indicar como una cadena de texto.
     '''
 
+    if target not in dataframe.columns:
+        print("La columna target no existe en el DataFrame.")
+        return None
+
+    if columna_categorica not in dataframe.columns:
+        print("La columna columna_categorica no existe en el DataFrame.")
+        return None
+
+    if dataframe[target].nunique() != 2:
+        print("La columna target no es binaria.")
+        return None
+
     try:
         dict_proporcional = dict(dataframe.groupby(columna_categorica)[target].mean())
         dataframe[nueva_columna] = dataframe[columna_categorica].map(dict_proporcional)
