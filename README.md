@@ -1,12 +1,16 @@
-![portada](documentation/logo_dstb.png)
-
+<p align="center">
+  <img src="https://github.com/maestre7/DataSciToolbox/blob/dev/documentation/logo_dstb.png" alt="Portada"/>
+</p>
 <p align="center">
   <a href="#Introducción">Introducción</a> •
-  <a href="#Estructura-repositorio.">Estructura repositorio.</a> •
-  <a href="#Variables.">Variables.</a> •
+  <a href="#github">GitHub.</a> •
+  <a href="#documentation">Documentation</a> •
+  <a href="#src">Src</a> •
+  <a href="#test">Test</a> •
+  <a href="#Contribuidores ">Contribuidores</a> •
 </p>
 
-<h2 id="Introducción"> :pencil: Introducción</h2>
+<h2 id="Introducción"> :book: Introducción</h2>
 
 Bienvenido/a a DataSciToolbox
 
@@ -25,13 +29,13 @@ Esta carpeta contiene los siguientes archivos:
 -   **workflows**: una subcarpeta que contiene los archivos .yml con las instrucciones para GitHub Actions.
 -   **flujo_de_trabajo.yml**: un archivo .yml con el flujo de trabajo para ejecutar los tests.
 
-<h3 id="documentation"> :book: documentation</h3>
+<h3 id="documentation"> :open_file_folder: documentation</h3>
 Esta carpeta contiene los siguientes archivos:
 
 -   **logo_dstb.png**: un archivo .png con el logo de DataSciToolbox.
 -   **index.rst**: un archivo .rst con el índice de la documentación.
 
-<h3 id="src"> :computer: src</h3>
+<h3 id="src"> :floppy_disk: src</h3>
 Esta carpeta contiene los siguientes archivos [Ver contenido](#src)
 
 
@@ -42,3 +46,38 @@ Esta carpeta contiene los siguientes archivos [Ver contenido](#src)
 <h3 id="test"> :computer: test</h3>
 
 Esta carpeta contiene funciones de test para testar los archivos de 
+
+
+<h3 id="Contribuidores"> :family: Contribuidores</h3>
+
+Este proyecto ha sido posible gracias a la valiosa contribución de cada uno de los siguientes integrantes, cuyo esfuerzo conjunto ha hecho posible su desarrollo: 
+
+-   [Javier Fernández](https://github.com/jaferdy) 
+
+-   [Santiago Valencia](https://github.com/Kuja182) 
+
+-   [Giacomo Salerno](https://github.com/GiamoSalerno) 
+
+-   [Alex Marzá](https://github.com/AlexCapis) 
+
+-   [Gabriela Romina Lupas](https://github.com/GabrielaRomina) 
+
+-   [Judit Roca](https://github.com/JuditRoca) 
+
+-   [Alfredo Ruiz Santos](https://github.com/maestre7) 
+
+-   [Blanca Marmolejo](https://github.com/BlancaMarmolejo) 
+
+-   [Braulio Vicente Gilabert Sol](https://github.com/braugilabert) 
+
+-   [Jaime Puchol](https://github.com/jpucholv) 
+
+-   [Juan A-Mendizábal Ibarrola](https://github.com/juanmendiz) 
+
+-   [Victoria Suárez](https://github.com/Vihelmet) 
+
+-   [Erika Guzmán](https://github.com/Erikahenriquez78) 
+
+-   [Xavi Albert](https://github.com/XaviAlbert) 
+
+-   [Javier Tejero](https://github.com/javiertejero1) 
