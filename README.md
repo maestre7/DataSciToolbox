@@ -32,7 +32,7 @@ Esta carpeta contiene los siguientes archivos:
 -   **index.rst**: un archivo .rst con el índice de la documentación.
 
 <h3 id="src"> :computer: src</h3>
-Esta carpeta contiene los siguientes archivos:
+Esta carpeta contiene los siguientes archivos[Ver contenido](#src):
 
 -   **modeling.py**
 -   **preprocessing.py**
@@ -40,4 +40,4 @@ Esta carpeta contiene los siguientes archivos:
 
 <h3 id="test"> :computer: src</h3>
 
-Esta carpeta contiene funciones de test para testar los archivos de [Ver contenido](#src)
+Esta carpeta contiene funciones de test para testar los archivos de 
