@@ -257,3 +257,34 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
 
+import pandas as pd
+
+
+def cambiar_nombres_columnas(df, **kwargs):
+    """
+    Cambia los nombres de las columnas de un DataFrame.
+
+    Parámetros de entrada:
+        - df: DataFrame. El dataframe en el que se cambiarán los nombres de las columnas.
+        - **kwargs: Diccionario de argumentos clave-valor donde la clave representa el nombre actual de la columna
+                    y el valor representa el nuevo nombre de la columna.
+
+    Retorna:
+        DataFrame. El dataframe con los nombres de las columnas modificados.
+
+    Ejemplo:
+        df = cambiar_nombres_columnas(df, columna1='nueva_columna1', columna2='nueva_columna2')
+    """
+    try:
+        
+        for columna_actual in kwargs.keys():
+            if columna_actual not in df.columns:
+                raise ValueError(f"La columna '{columna_actual}' no existe en el DataFrame.")
+
+        
+        df = df.rename(columns=kwargs)
+
+    except Exception as e:
+        print(f"Error al cambiar los nombres de las columnas: {e}")
+
+    return df
