@@ -6,6 +6,10 @@ import seaborn as sns
 from typing import Any, List
 import folium
 from wordcloud import WordCloud
+from sklearn.model_selection import learning_curve
+from sklearn.metrics import precision_recall_curve
+from sklearn.utils import check_consistent_length, column_or_1d
+from sklearn.metrics import roc_curve
 
 
 def plot_moving_averages (data:pd.DataFrame, feature:str, medias_moviles=None, colores=None):
