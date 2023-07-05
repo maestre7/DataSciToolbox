@@ -310,3 +310,43 @@ def create_dataframe_yahoo_finance(symbol):
     except Exception as e:
         print(f"Error al descargar los datos de Yahoo Finance para el símbolo {symbol}: {str(e)}")
         return None
+
+import pandas as pd
+
+def limpiar_columnas_numericas(dataframe, columna, caracteres_especiales, valor_reemplazo):
+    """
+    Limpia una columna de un DataFrame, reemplazando los caracteres especiales inválidos
+    por un valor de reemplazo dado.
+
+    Args:
+        dataframe (pandas.DataFrame): El DataFrame que contiene la columna a limpiar.
+        columna (str): El nombre de la columna a limpiar.
+        caracteres_especiales (list): Lista de caracteres especiales inválidos.
+        valor_reemplazo (str): Valor utilizado para reemplazar los caracteres especiales.
+
+    Returns:
+        pandas.DataFrame: El DataFrame con la columna limpia.
+
+    Raises:
+        Exception: Si se encuentra un caracter especial inválido en la columna.
+    """
+   
+    columna_datos = dataframe[columna]
+    
+    for i, dato in enumerate(columna_datos):
+        try:
+            for caracter in caracteres_especiales:
+                if caracter in dato:
+                    raise Exception("Se encontró un caracter especial inválido en la columna.")
+            
+            for caracter in caracteres_especiales:
+                dato = dato.replace(caracter, valor_reemplazo)
+            
+            columna_datos[i] = dato
+        
+        except Exception as e:
+            print(f"Error: {str(e)}")
+    
+    dataframe[columna] = columna_datos
+    
+    return dataframe
