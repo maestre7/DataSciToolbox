@@ -1,44 +1,45 @@
 
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
+from imblearn.over_sampling import RandomOverSampler
+from imblearn.under_sampling import RandomUnderSampler
 
-def train_test_split_df(df, target_col, test_percent, random_state):
+def balance_target_column_random(df, target_column):
     """
-    Divide un DataFrame en conjuntos de entrenamiento y prueba para el aprendizaje automático.
+    Equilibra una columna objetivo especificada en el DataFrame utilizando sobremuestreo y submuestreo aleatorio.
+    Los datos se mezclan antes de devolver el DataFrame equilibrado.
 
     Parámetros:
-        df (pandas.DataFrame): El DataFrame de entrada.
-        target_col (str): El nombre de la columna objetivo en el DataFrame.
-        test_percent (float): El porcentaje de datos para usar en la prueba (entre 0 y 1).
-        random_state (int): El estado aleatorio para garantizar la reproducibilidad.
+        df (pandas.DataFrame): El DataFrame de entrada que contiene la columna objetivo.
+        target_column (str): El nombre de la columna objetivo a equilibrar.
 
     Retorna:
-        X_train (pandas.DataFrame): Las características del conjunto de entrenamiento.
-        X_test (pandas.DataFrame): Las características del conjunto de prueba.
-        y_train (pandas.Series): La variable objetivo del conjunto de entrenamiento.
-        y_test (pandas.Series): La variable objetivo del conjunto de prueba.
+        pandas.DataFrame: Un nuevo DataFrame con la columna objetivo equilibrada y mezclada.
 
-    Imprime:
-        La forma de cada conjunto para confirmar la dimensión.
     """
     try:
         # Separar características (X) y variable objetivo (y)
-        X = df.drop(target_col, axis=1)
-        y = df[target_col]
+        X = df.drop(target_column, axis=1)
+        y = df[target_column]
 
-        # Dividir los datos en conjuntos de entrenamiento y prueba
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_percent, random_state=random_state)
+        # Instanciar RandomOverSampler y RandomUnderSampler
+        oversampler = RandomOverSampler(random_state=42)
+        undersampler = RandomUnderSampler(random_state=42)
 
-        print("Forma de X:", X.shape)
-        print("Forma de y:", y.shape)
+        # Sobremuestrear la clase mayoritaria
+        X_oversampled, y_oversampled = oversampler.fit_resample(X, y)
 
-        print("Forma de X_train:", X_train.shape)
-        print("Forma de X_test:", X_test.shape)
-        print("Forma de y_train:", y_train.shape)
-        print("Forma de y_test:", y_test.shape)
+        # Submuestrear la clase minoritaria
+        X_resampled, y_resampled = undersampler.fit_resample(X_oversampled, y_oversampled)
 
-        return X_train, X_test, y_train, y_test
+        # Crear un nuevo DataFrame equilibrado
+        balanced_df = pd.concat([X_resampled, y_resampled], axis=1)
+
+        # Mezclar los datos
+        balanced_df = shuffle(balanced_df, random_state=42)
+
+        return balanced_df
 
     except Exception as e:
-        print("Error al dividir los datos en conjuntos de entrenamiento y prueba:", str(e))
-        return None, None, None, None
+        print("Error al equilibrar la columna objetivo:", str(e))
+        return None
