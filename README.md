@@ -2,8 +2,10 @@
 
 <p align="center">
   <a href="#Introducción">Introducción</a> •
-  <a href="#Estructura-repositorio.">Estructura repositorio.</a> •
-  <a href="#Variables.">Variables.</a> •
+  <a href="#github">GitHub.</a> •
+  <a href="#documentation">Documentation</a> •
+  <a href="#Scr">Scr</a> •
+  <a href="#test">test</a> •
 </p>
 
 <h2 id="Introducción"> :pencil: Introducción</h2>
