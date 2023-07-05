@@ -311,8 +311,6 @@ def create_dataframe_yahoo_finance(symbol):
         print(f"Error al descargar los datos de Yahoo Finance para el símbolo {symbol}: {str(e)}")
         return None
 
-import pandas as pd
-
 def limpiar_columnas_numericas(dataframe, columna, caracteres_especiales, valor_reemplazo):
     """
     Limpia una columna de un DataFrame, reemplazando los caracteres especiales inválidos

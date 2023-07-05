@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from preprocessing import limpiar_columnas_numericas
+from src.preprocessing import limpiar_columnas_numericas
 
 # Crear un DataFrame de prueba
 @pytest.fixture
