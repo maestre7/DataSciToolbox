@@ -75,6 +75,7 @@ class ReduceMemory:
         Returns:
             pd.Series: Columna de tipo entero con el consumo de memoria reducido.
         """
+
         try:
             self.before_size = round(sys.getsizeof(data_serie) / 1024 ** 2,2)
                     
@@ -137,7 +138,7 @@ class ReduceMemory:
             
             if min_value >= np.iinfo('int8').min and max_value <= np.iinfo('int8').max:
                 data_serie = data_serie.astype('int8')
-            if min_value >= np.iinfo('int16').min and max_value <= np.iinfo('int16').max:
+            elif min_value >= np.iinfo('int16').min and max_value <= np.iinfo('int16').max:
                 data_serie = data_serie.astype('int16')
             elif min_value >= np.iinfo('int32').min and max_value <= np.iinfo('int32').max:
                 data_serie = data_serie.astype('int32')
