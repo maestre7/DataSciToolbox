@@ -1,4 +1,3 @@
-# DataSciToolbox
 
 ![portada](documentation/logo_dstb.png)
 
