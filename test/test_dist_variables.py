@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 from matplotlib import pyplot as plt
 
-from visualization import dist_variables
+from src.visualization import dist_variables
 
 def test_dist_variables_target():
     # DataFrame de ejemplo

@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from preprocessing import ReduceMemory
+from src.preprocessing import ReduceMemory
 
 @pytest.fixture
 def sample_data():
