@@ -18,10 +18,10 @@ Le damos la bienvenida a la biblioteca de funciones en Python orientadas a machi
 
 En ella, encontrará un extensivo repositorio que abarca todas las fases necesarias para afrontar un proyecto de machine learning, desde el análisis exploratorio de datos hasta la evaluación de los modelos, pasando por las etapas de preprocesamiento, visualización, feature engineering o entrenamiento y evaluación de los modelos.
 
--   **.github**: contiene los archivos de configuración para GitHub Actions, que se encargan de ejecutar los tests automáticamente cada vez que se hace un commit o un pull request al repositorio. [Ver contenido](#github)
--   **documentation**: contiene los archivos HTML y CSS que generan la documentación completa de la biblioteca, usando la herramienta Sphinx. Puede acceder a la documentación desde este [enlace](https://datascitoolbox.github.io/documentation/index.html). [Ver contenido](#documentation)
--   **src**: contiene los archivos .py con el código fuente de la biblioteca, organizados en diferentes módulos según la funcionalidad que ofrecen. Cada módulo contiene varias funciones que se pueden importar y usar en los proyectos de machine learning. [Ver contenido](#src)
--   **test**: contiene los archivos .py con los tests unitarios que se han realizado para comprobar el correcto funcionamiento de las funciones de la biblioteca, usando la herramienta pytest. También contiene algunas imágenes y archivos auxiliares que se usan en los tests, así como una carpeta donde se guardan los resultados de los tests. [Ver contenido](#test)
+-   [**.github**](https://github.com/maestre7/DataSciToolbox/tree/dev/.github/workflows): contiene los archivos de configuración para GitHub Actions, que se encargan de ejecutar los tests automáticamente cada vez que se hace un commit o un pull request al repositorio. [Ver contenido](#github)
+-   [**documentation**](https://github.com/maestre7/DataSciToolbox/tree/dev/documentation): contiene los archivos HTML y CSS que generan la documentación completa de la biblioteca, usando la herramienta Sphinx. Puede acceder a la documentación desde este [enlace](https://datascitoolbox.github.io/documentation/index.html). [Ver contenido](#documentation)
+-   [**src**](https://github.com/maestre7/DataSciToolbox/tree/dev/src): contiene los archivos .py con el código fuente de la biblioteca, organizados en diferentes módulos según la funcionalidad que ofrecen. Cada módulo contiene varias funciones que se pueden importar y usar en los proyectos de machine learning. [Ver contenido](#src)
+-   [**test**](https://github.com/maestre7/DataSciToolbox/tree/dev/test): contiene los archivos .py con los tests unitarios que se han realizado para comprobar el correcto funcionamiento de las funciones de la biblioteca, usando la herramienta pytest. También contiene algunas imágenes y archivos auxiliares que se usan en los tests, así como una carpeta donde se guardan los resultados de los tests. [Ver contenido](#test)
 <h3 id="github"> :octocat: .github</h3>
 
 Esta carpeta contiene los siguientes archivos:
@@ -33,7 +33,8 @@ Esta carpeta contiene los siguientes archivos:
 Esta carpeta contiene los siguientes archivos:
 
 -   **logo_dstb.png**: un archivo .png con el logo de DataSciToolbox.
--   **index.rst**: un archivo .rst con el índice de la documentación.
+-   **demo_notebook.ipynb**: demostración de funcionalidades de la biblioteca.
+-   **memoria.ipynb**: un resumen de todas las funciones de la biblioteca.
 
 <h3 id="src"> :floppy_disk: src</h3>
 Esta carpeta contiene los siguientes archivos [Ver contenido](#src)
@@ -45,7 +46,7 @@ Esta carpeta contiene los siguientes archivos [Ver contenido](#src)
 
 <h3 id="test"> :computer: test</h3>
 
-Esta carpeta contiene funciones de test para testar los archivos de 
+Esta carpeta contiene funciones de test para comprobar el correcto funcionamiento de la biblioteca.
 
 
 <h3 id="Contribuidores"> :family: Contribuidores</h3>
