@@ -5,7 +5,7 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 from sklearn.metrics import silhouette_score
 
-from src.modeling.py import modelo_kmeans_df
+from src.modeling import modelo_kmeans_df
 
 
 def test_modelo_kmeans_df():
