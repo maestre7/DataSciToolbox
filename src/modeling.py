@@ -1,6 +1,10 @@
 from typing import Any
 import numpy, pandas
-
+import os
+import pickle
+import warnings
+from sklearn.metrics import r2_score, mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
+from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 
 def evaluacion_clas(nom_modelo: str, modelo: Any, X_train: numpy.ndarray, y_train: numpy.ndarray, X_test: numpy.ndarray, y_test: numpy.ndarray, redondeo: int = None) -> pandas.DataFrame: # type: ignore
@@ -51,3 +55,38 @@ def evaluacion_clas(nom_modelo: str, modelo: Any, X_train: numpy.ndarray, y_trai
     except Exception as e:
         print("Error al evaluar el modelo'{}':".format(nom_modelo))
         return None # type: ignore
+    
+
+
+def export_import_model(model, path_model, name, save=True, open=False):
+    '''
+    Funcion para exportar o importar el modelo entrenado
+    Parametros
+    ----------
+        model: el modelo a guardar.
+        path_model: directorio donde se almacenará.
+        name: nombre del modelo a guardar.
+        
+        save: por defecto nos guarda el modelo entrenado.
+        open: por defecto False. Si True, importamos el modelo entrenado
+    '''
+
+    # Exportamos el modelo con el nombre seleccionado, al path escogido.
+    filename = os.path.join(path_model, name)
+
+    if save:
+        try:
+            with open(filename, 'wb') as archivo_salida:
+                pickle.dump(model, archivo_salida)
+        except Exception as e:
+            print(f"Error al guardar el modelo: {str(e)}")
+
+    if open:
+        try:
+            with open(filename, 'rb') as archivo_entrada:
+                model_pretrained = pickle.load(archivo_entrada)
+        except Exception as e:
+            print(f"Error al cargar el modelo: {str(e)}")
+            model_pretrained = None
+
+    return model_pretrained
