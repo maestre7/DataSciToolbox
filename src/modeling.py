@@ -1,12 +1,13 @@
 
 import pandas as pd
 from sklearn.utils import shuffle
-from imblearn.over_sampling import RandomOverSampler
-from imblearn.under_sampling import RandomUnderSampler
+from imblearn.over_sampling import SMOTE
+from imblearn.under_sampling import EditedNearestNeighbours
+from imblearn.combine import SMOTEENN
 
-def balance_target_column_random(df, target_column):
+def balance_target_column_smote(df, target_column):
     """
-    Equilibra una columna objetivo especificada en el DataFrame utilizando sobremuestreo y submuestreo aleatorio.
+    Equilibra una columna objetivo especificada en el DataFrame utilizando una combinación de sobremuestreo y submuestreo.
     Los datos se mezclan antes de devolver el DataFrame equilibrado.
 
     Parámetros:
@@ -22,15 +23,11 @@ def balance_target_column_random(df, target_column):
         X = df.drop(target_column, axis=1)
         y = df[target_column]
 
-        # Instanciar RandomOverSampler y RandomUnderSampler
-        oversampler = RandomOverSampler(random_state=42)
-        undersampler = RandomUnderSampler(random_state=42)
+        # Instanciar el muestreador SMOTEENN
+        sampler = SMOTEENN(random_state=42)
 
-        # Sobremuestrear la clase mayoritaria
-        X_oversampled, y_oversampled = oversampler.fit_resample(X, y)
-
-        # Submuestrear la clase minoritaria
-        X_resampled, y_resampled = undersampler.fit_resample(X_oversampled, y_oversampled)
+        # Remuestrear los datos
+        X_resampled, y_resampled = sampler.fit_resample(X, y)
 
         # Crear un nuevo DataFrame equilibrado
         balanced_df = pd.concat([X_resampled, y_resampled], axis=1)
