@@ -3,10 +3,6 @@ import pandas as pd
 import pytest
 import sys
 
-# Agregar el directorio raíz del proyecto a la ruta de búsqueda de módulos
-root_dir = os.path.dirname(os.path.dirname(os.path.abspath('preprocessing.py')))
-sys.path.append(root_dir)
-
 from src.preprocessing import segmentar_y_guardar
 
 @pytest.fixture
