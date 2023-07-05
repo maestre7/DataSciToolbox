@@ -38,6 +38,6 @@ Esta carpeta contiene los siguientes archivos[Ver contenido](#src):
 -   **preprocessing.py**
 -   **visualization.py**
 
-<h3 id="test"> :computer: src</h3>
+<h3 id="test"> :computer: test</h3>
 
 Esta carpeta contiene funciones de test para testar los archivos de 
