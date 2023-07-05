@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 
 # Importar la función que se va a probar
-from ..src.preprocessing import eliminacion_outliers
+from preprocessing import eliminacion_outliers
 
 
 # Crear pruebas utilizando pytest
