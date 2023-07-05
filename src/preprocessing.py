@@ -257,9 +257,6 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
 
-import pandas as pd
-import numpy as np
-
 def eliminacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
     '''
     Esta función elimina las filas del DataFrame que contienen valores atípicos (outliers) en una columna especifica.
