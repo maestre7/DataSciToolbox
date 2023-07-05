@@ -288,3 +288,25 @@ def cambiar_nombres_columnas(df, **kwargs):
         print(f"Error al cambiar los nombres de las columnas: {e}")
 
     return df
+
+import pandas as pd
+import yfinance as yf
+
+def create_dataframe_yahoo_finance(symbol):
+    """
+    Crea un DataFrame a partir de los datos descargados de Yahoo Finance para un símbolo específico.
+
+    Parámetros de entrada:
+        - symbol: str. El símbolo del activo financiero para el cual se desea obtener los datos.
+
+    Retorna:
+        DataFrame. El dataframe con los datos descargados de Yahoo Finance.
+
+    """
+    try:
+        data = yf.download(symbol)
+        df = pd.DataFrame(data)
+        return df
+    except Exception as e:
+        print(f"Error al descargar los datos de Yahoo Finance para el símbolo {symbol}: {str(e)}")
+        return None
