@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-from src.modeling import evaluacion_clas
+from modeling import evaluacion_clas
 
 def test_evaluacion_clas_iris():
     # Cargar el conjunto de datos iris
