@@ -257,10 +257,6 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
 
-import pandas as pd
-import numpy as np
-import seaborn as sns
-
 def comprobacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
     '''
     Esta función calcula el número de outliers y su proporción con respecto al total en una columna numérica de un DataFrame de Pandas.
