@@ -1,7 +1,11 @@
 <p align="center">
+  
 ![portada](documentation/logo_dstb.png)
-</p>
 
+</p>
+<p align="center">
+  <img src="https://github.com/maestre7/DataSciToolbox/blob/dev/documentation/logo_dstb.png" alt="Portada"/>
+</p>
 <p align="center">
   <a href="#Introducción">Introducción</a> •
   <a href="#github">GitHub.</a> •
