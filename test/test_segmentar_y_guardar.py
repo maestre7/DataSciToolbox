@@ -3,7 +3,7 @@ import pandas as pd
 import pytest
 import sys
 
-from preprocessing import segmentar_y_guardar
+from src.preprocessing import segmentar_y_guardar
 
 @pytest.fixture
 def df_ejemplo():

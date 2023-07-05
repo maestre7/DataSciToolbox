@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 import os
 import sys
 
-from preprocessing import calcular_edad
+from src.preprocessing import calcular_edad
 
 @pytest.fixture
 def sample_data():

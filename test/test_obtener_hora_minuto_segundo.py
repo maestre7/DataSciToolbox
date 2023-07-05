@@ -1,10 +1,10 @@
 import pandas as pd
 import pytest
+from dateutil.relativedelta import relativedelta
 import os
 import sys
-from dateutil.relativedelta import relativedelta
 
-from preprocessing import obtener_hora_minuto_segundo
+from src.preprocessing import obtener_hora_minuto_segundo
 
 @pytest.fixture
 def ejemplo_dataframe():

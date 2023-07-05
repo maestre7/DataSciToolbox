@@ -3,7 +3,7 @@ import pytest
 import os
 import sys
 
-from preprocessing import eliminar_unidades_metricas
+from src.preprocessing import eliminar_unidades_metricas
 
 @pytest.fixture
 def sample_dataframe():
