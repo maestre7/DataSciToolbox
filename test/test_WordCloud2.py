@@ -1,5 +1,5 @@
 import pytest
-from wordcloud_graphic import plot_wordcloud
+from src.visualization import plot_wordcloud
 
 def test_plot_wordcloud():
     # Caso de prueba con datos válidos

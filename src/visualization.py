@@ -241,89 +241,104 @@ def dist_variables(data: pd.DataFrame, target: str = None, ncols: int = 2, figsi
     
 def plot_correlations(dataframe, target, figsize, filename):
     
-    """Esta función crea un gráfico de barras que muestra las correlaciones de la variable objetivo con el resto de las variables.
+    try:
+        """Esta función crea un gráfico de barras que muestra las correlaciones de la variable objetivo con el resto de las variables.
 
-    Args:
+        Args:
         dataframe (pd.DataFrame): El DataFrame que contiene los datos.
         target (str): El nombre de la columna que representa la variable objetivo.
         figsize (tuple): El tamaño de la figura del gráfico en pulgadas (ancho, alto).
         filename (str): El nombre del archivo en el que se guardará la figura.
-    """
+        """
 
-    #para calcular las correlaciones de la variable objetivo con el resto de las variables con dataframe.corr()
-    correlations = dataframe.corr()[target].drop(target)
+        #para calcular las correlaciones de la variable objetivo con el resto de las variables con dataframe.corr()
+        correlations = dataframe.corr()[target].drop(target)
 
-    #Ordenar las correlaciones de mayor a menor usando correlations.sort_values()
-    correlations = correlations.sort_values(ascending=False)
+        #Ordenar las correlaciones de mayor a menor usando correlations.sort_values()
+        correlations = correlations.sort_values(ascending=False)
 
-    #tamaño de la figura
-    plt.figure(figsize=figsize)
+        #tamaño de la figura
+        plt.figure(figsize=figsize)
 
-    #gráfico de barras con sns.barplot()
-    sns.barplot(x=correlations, y=correlations.index, palette='Blues')
+        #gráfico de barras con sns.barplot()
+        sns.barplot(x=correlations, y=correlations.index, palette='Blues')
 
-    #Añadir los ejes y el título usando plt.xlabel(), plt.ylabel() y plt.title()
-    plt.xlabel('Correlación')
-    plt.ylabel('Variable')
-    plt.title(f'Correlaciones de {target} con el resto de las variables')
+        #Añadir los ejes y el título usando plt.xlabel(), plt.ylabel() y plt.title()
+        plt.xlabel('Correlación')
+        plt.ylabel('Variable')
+        plt.title(f'Correlaciones de {target} con el resto de las variables')
 
-    #Guardar la figura en un archivo
-    plt.savefig(filename)
+        #Guardar la figura en un archivo
+        plt.savefig(filename)
 
-    #gráfico
-    plt.show()
+        #gráfico
+        plt.show()
     
+    except Exception as e:
+        error_message = "Ocurrió un error durante la visualización: " + str(e)
+        print(error_message)
+        return None
 
 def plot_map(dataframe, figsize):
-    """Esta función crea un mapa interactivo a partir de un DataFrame.
+    
+    try:
+        """Esta función crea un mapa interactivo a partir de un DataFrame.
 
-    Argumentos:
-        dataframe (pd.DataFrame): El DataFrame que contiene los datos.
-        figsize (tuple): El tamaño de la figura del mapa en píxeles (ancho, alto).
-    """
+        Argumentos:
+            dataframe (pd.DataFrame): El DataFrame que contiene los datos.
+            figsize (tuple): El tamaño de la figura del mapa en píxeles (ancho, alto).
+        """
 
-    #Crear el mapa usando folium.Map()
-    mapa = folium.Map(location=[dataframe['lat'].mean(), dataframe['lon'].mean()], 
-                      zoom_start=10, tiles='Stamen Terrain')
+        #Crear el mapa usando folium.Map()
+        mapa = folium.Map(location=[dataframe['lat'].mean(), dataframe['lon'].mean()], 
+                        zoom_start=10, tiles='Stamen Terrain')
 
-    #Añadir marcadores con folium.Marker()
-    for i, row in dataframe.iterrows():
-        folium.Marker(location=[row['lat'], row['lon']],
-                      popup=row['name'], 
-                      icon=folium.Icon(color=row['color'])).add_to(mapa)
+        #Añadir marcadores con folium.Marker()
+        for i, row in dataframe.iterrows():
+            folium.Marker(location=[row['lat'], row['lon']],
+                        popup=row['name'], 
+                        icon=folium.Icon(color=row['color'])).add_to(mapa)
 
-    #Mostrar el mapa usando folium.Figure()
-    fig = folium.Figure(width=figsize[0], height=figsize[1])
-    fig.add_child(mapa)
-    mapa.save("map.html") #PARA QUE SE VEA EL MAPA
-    fig
+        #Mostrar el mapa usando folium.Figure()
+        fig = folium.Figure(width=figsize[0], height=figsize[1])
+        fig.add_child(mapa)
+        mapa.save("map.html") #PARA QUE SE VEA EL MAPA
+        fig
+        
+    except Exception as e:
+        error_message = "Ocurrió un error durante la visualización: " + str(e)
+        print(error_message)
+        return None
     
 def plot_wordcloud(text, figsize, filename):
-    """Esta función crea una nube de palabras a partir de un texto.
+    try:
+        """Esta función crea una nube de palabras a partir de un texto.
 
-    Argumentos=
-        text (str): El texto que contiene las palabras.
-        figsize (tuple): El tamaño de la figura de la nube de palabras en pulgadas (ancho, alto).
-        filename (str): El nombre del archivo en el que se guardará la figura.
-    """
+        Argumentos=
+            text (str): El texto que contiene las palabras.
+            figsize (tuple): El tamaño de la figura de la nube de palabras en pulgadas (ancho, alto).
+            filename (str): El nombre del archivo en el que se guardará la figura.
+        """
 
-    #Nube de palabras creada usando WordCloud()
-    wc = WordCloud(background_color='white', 
-                   max_words=100, 
-                   width=figsize[0]*100, 
-                   height=figsize[1]*100).generate(text)
+        #Nube de palabras creada usando WordCloud()
+        wc = WordCloud(background_color='white', 
+                    max_words=100, 
+                    width=figsize[0]*100, 
+                    height=figsize[1]*100).generate(text)
 
-    #Tamaño de la figura
-    plt.figure(figsize=figsize)
+        #Tamaño de la figura
+        plt.figure(figsize=figsize)
 
-    #Mostrar la nube de palabras usando plt.imshow() y plt.axis()
-    plt.imshow(wc, interpolation='bilinear')
-    plt.axis('off')
+        #Mostrar la nube de palabras usando plt.imshow() y plt.axis()
+        plt.imshow(wc, interpolation='bilinear')
+        plt.axis('off')
 
-    #Guardar
-    plt.savefig(filename)
+        #Guardar
+        plt.savefig(filename)
 
-    #Mostrar
-    plt.show()
-    
-    
+        #Mostrar
+        plt.show()
+    except Exception as e:
+        error_message = "Ocurrió un error durante la visualización: " + str(e)
+        print(error_message)
+        return None

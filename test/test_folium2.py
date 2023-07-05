@@ -1,5 +1,5 @@
 import pytest
-from folium_graphic import plot_map
+from src.visualization import plot_map
 import pandas as pd
 
 def test_plot_map():

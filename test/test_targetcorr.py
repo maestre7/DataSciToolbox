@@ -1,5 +1,5 @@
 import pytest
-from correlacion_target import plot_correlations
+from src.visualization import plot_correlations
 import pandas as pd
 
 def test_plot_correlations():
