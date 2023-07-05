@@ -4,11 +4,12 @@
   <a href="#Introducción">Introducción</a> •
   <a href="#github">GitHub.</a> •
   <a href="#documentation">Documentation</a> •
-  <a href="#Scr">Scr</a> •
+  <a href="#scr">scr</a> •
   <a href="#test">test</a> •
+  <a href="#Contribuidores ">Contribuidores</a> •
 </p>
 
-<h2 id="Introducción"> :pencil: Introducción</h2>
+<h2 id="Introducción"> :book: Introducción</h2>
 
 Bienvenido/a a DataSciToolbox
 
@@ -33,7 +34,7 @@ Esta carpeta contiene los siguientes archivos:
 -   **logo_dstb.png**: un archivo .png con el logo de DataSciToolbox.
 -   **index.rst**: un archivo .rst con el índice de la documentación.
 
-<h3 id="src"> :computer: src</h3>
+<h3 id="src"> :floppy_disk: src</h3>
 Esta carpeta contiene los siguientes archivos [Ver contenido](#src)
 
 
@@ -46,7 +47,7 @@ Esta carpeta contiene los siguientes archivos [Ver contenido](#src)
 Esta carpeta contiene funciones de test para testar los archivos de 
 
 
-Contribuidores 
+<h3 id="Contribuidores"> :family: Contribuidores</h3>
 
 Este proyecto ha sido posible gracias a la valiosa contribución de cada uno de los siguientes integrantes, cuyo esfuerzo conjunto ha hecho posible su desarrollo: 
 
