@@ -4,6 +4,11 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import seaborn as sns
 from typing import Any, List
+from sklearn.model_selection import learning_curve
+from sklearn.metrics import precision_recall_curve
+from sklearn.utils import check_consistent_length, column_or_1d
+from sklearn.metrics import roc_curve
+
 
 def plot_moving_averages (data:pd.DataFrame, feature:str, medias_moviles=None, colores=None):
     '''
@@ -170,8 +175,10 @@ def plot_scatter_with_reference(y_test: np.array, predictions: np.array, title: 
     """
     try:
         sns.set(style="darkgrid")
-        plt.scatter(y_test, predictions, color='blue', label='Valores de prueba vs. Valores predichos')
-        plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], 'r--')  # Línea de referencia: valores reales = valores predichos
+        plt.scatter(y_test, predictions, color='blue',
+                    label='Valores de prueba vs. Valores predichos')
+        # Línea de referencia: valores reales = valores predichos
+        plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], 'r--')
         plt.scatter(y_test, y_test, color='red', label='Valores de prueba')
         plt.xlabel('Valores de prueba')
         plt.ylabel('Valores predichos')
@@ -182,6 +189,88 @@ def plot_scatter_with_reference(y_test: np.array, predictions: np.array, title: 
         print("Ocurrió un error al generar el gráfico de dispersión:", str(e))
     finally:
         return None
+
+
+
+def plot_learning_curve(estimator, X, y, cv=None, train_sizes=np.linspace(0.1, 1.0, 5)):
+    """
+    Genera una curva de aprendizaje para un estimador dado.
+
+    Parámetros:
+    estimator: objeto de estimador
+    X: matriz de características
+    y: vector de etiquetas
+    cv: validación cruzada (opcional)
+    train_sizes: tamaños de los conjuntos de entrenamiento (opcional)
+
+    Devuelve:
+    None
+    """
+    try:
+        plt.figure()
+        plt.title("Curva de aprendizaje")
+        plt.xlabel("Tamaño del conjunto de entrenamiento")
+        plt.ylabel("Score")
+
+        train_sizes, train_scores, test_scores = learning_curve(
+            estimator, X, y, cv=cv, train_sizes=train_sizes)
+
+        # Calcular la media y el desvío estándar del training score
+        train_scores_mean = np.mean(train_scores, axis=1)
+        train_scores_std = np.std(train_scores, axis=1)
+
+        # Graficar la curva de aprendizaje del training score
+        plt.grid()
+        plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
+                         train_scores_mean + train_scores_std, alpha=0.1,
+                         color="r")
+        plt.plot(train_sizes, train_scores_mean, 'o-', color="r",
+                 label="Training score")
+
+        plt.legend(loc="best")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+def plot_precision_recall_curve(y_true, y_prob):
+    """
+    Genera una curva de precisión-recall dadas las etiquetas verdaderas y las probabilidades predichas.
+
+    Parámetros:
+    y_true: vector de etiquetas verdaderas
+    y_prob: vector de probabilidades predichas
+    """
+    try:
+        # Verificar si los argumentos son válidos
+        y_true = column_or_1d(y_true)
+        y_prob = column_or_1d(y_prob)
+        check_consistent_length(y_true, y_prob)
+
+        # Calcular la precisión y el recall para diferentes umbrales
+        precision, recall, _ = precision_recall_curve(y_true, y_prob)
+
+        # Generar la gráfica
+        plt.plot(recall, precision)
+        plt.xlabel('Recall')
+        plt.ylabel('Precision')
+        plt.title('Precision-Recall Curve')
+        plt.show()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        raise e
+
+
+def plot_roc_curve(y_true, y_score):
+    try:
+        fpr, tpr, _ = roc_curve(y_true, y_score)
+        plt.plot(fpr, tpr)
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('ROC Curve')
+        plt.show()
+    except Exception as e:
+        print(f'Error: {e}')
+
     
 
 def dist_variables(data: pd.DataFrame, target: str = None, ncols: int = 2, figsize: tuple = (30, 30)) -> plt.Figure: # type: ignore
@@ -236,7 +325,7 @@ def dist_variables(data: pd.DataFrame, target: str = None, ncols: int = 2, figsi
         print(error_message)
         return None
     
-def plot_quality_counts(dataframe: pd.DataFrame, column:str, color:str) -> None:
+def plot_quality_counts(dataframe: pd.DataFrame, column: str, color: str) -> None:
     """Crea un gráfico de barras que muestra el recuento de valores en una columna específica.
     
     Args:
@@ -244,33 +333,40 @@ def plot_quality_counts(dataframe: pd.DataFrame, column:str, color:str) -> None:
         column (str): El nombre de la columna para la cual se desea hacer el gráfico de barras.
         color (str): El color de las barras del gráfico.
     """
-    # Crea el gráfico de barras utilizando value_counts() y plot.bar()
-    dataframe[column].value_counts().plot.bar(rot=0, color=color)
-    
-    # Personaliza el gráfico
-    plt.ylabel('Recuento')
-    plt.xlabel(column)
-    
-    # Muestra el gráfico
-    plt.show()
+    try:
+        # Crea el gráfico de barras utilizando value_counts() y plot.bar()
+        dataframe[column].value_counts().plot.bar(rot=0, color=color)
+        
+        # Personaliza el gráfico
+        plt.ylabel('Recuento')
+        plt.xlabel(column)
+        
+        # Muestra el gráfico
+        plt.show()
+    except KeyError:
+        print(f"La columna '{column}' no existe en el DataFrame.")
+    except Exception as e:
+        print(f"Ocurrió un error: {str(e)}")
 
 
-def plot_heatmap(dataframe: pd.DataFrame, figsize:tuple) -> None:
+def plot_heatmap(dataframe: pd.DataFrame, figsize: tuple) -> None:
     """Crea un mapa de calor (heatmap) a partir de un DataFrame.
     
     Args:
         dataframe (pd.DataFrame): El DataFrame que contiene los datos.
         figsize (tuple): El tamaño de la figura del heatmap en pulgadas (ancho, alto).
     """
-    
-    # Configurar el tamaño de la figura
-    plt.figure(figsize=figsize)
-    
-    # Crear el mapa de calor utilizando sns.heatmap()
-    sns.heatmap(dataframe.corr(), annot=True)
-    
-    # Mostrar el mapa de calor
-    plt.show()
+    try:
+        # Configurar el tamaño de la figura
+        plt.figure(figsize=figsize)
+        
+        # Crear el mapa de calor utilizando sns.heatmap()
+        sns.heatmap(dataframe.corr(), annot=True)
+        
+        # Mostrar el mapa de calor
+        plt.show()
+    except Exception as e:
+        print(f"Ocurrió un error: {str(e)}")
 
 
 def plot_data(dataframe: pd.DataFrame, x: str, y: str, plot_type: str) -> None:
@@ -282,27 +378,31 @@ def plot_data(dataframe: pd.DataFrame, x: str, y: str, plot_type: str) -> None:
         y (str): La columna del DataFrame para el eje y.
         plot_type (str): El tipo de gráfico a crear ('violin', 'scatter', 'bar', etc.).
     """
-    if plot_type == 'violin':
-        # Violin plot
-        sns.violinplot(x=x, y=y, data=dataframe)
-        plt.xlabel(x)
-        plt.ylabel(y)
-        plt.title('Violin Plot')
-    
-    elif plot_type == 'scatter':
-        # Scatter plot
-        plt.scatter(dataframe[x], dataframe[y])
-        plt.xlabel(x)
-        plt.ylabel(y)
-        plt.title('Scatter Plot')
-    
-    elif plot_type == 'bar':
-        # Bar plot
-        sns.barplot(x=x, y=y, data=dataframe)
-        plt.xlabel(x)
-        plt.ylabel(y)
-        plt.title('Bar Plot')
-    
-    # Agregar más tipos de gráficos según sea necesario
-    
-    plt.show()
+    try:
+        if plot_type == 'violin':
+            # Violin plot
+            sns.violinplot(x=x, y=y, data=dataframe)
+            plt.xlabel(x)
+            plt.ylabel(y)
+            plt.title('Violin Plot')
+        
+        elif plot_type == 'scatter':
+            # Scatter plot
+            plt.scatter(dataframe[x], dataframe[y])
+            plt.xlabel(x)
+            plt.ylabel(y)
+            plt.title('Scatter Plot')
+        
+        elif plot_type == 'bar':
+            # Bar plot
+            sns.barplot(x=x, y=y, data=dataframe)
+            plt.xlabel(x)
+            plt.ylabel(y)
+            plt.title('Bar Plot')
+        
+        # Agregar más tipos de gráficos según sea necesario
+        
+        plt.show()
+    except Exception as e:
+        print(f"Ocurrió un error: {str(e)}")
+
