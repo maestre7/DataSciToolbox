@@ -401,6 +401,103 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
     except Exception as e:
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
+        
+def encoding_proporcional_target_binaria(dataframe: pd.DataFrame, target: str, columna_categorica: str, nueva_columna: str):
+    '''
+    Esta función realiza un encoding de una columna de tipo object en un DataFrame de pandas, creando una nueva columna. Esta función está diseñada para el contexto en el que la variable a predecir sea binaria.
+
+    El encoding se realiza proporcionalmente al peso que cada variable categórica tiene en el problema.
+
+    Argumentos:
+    - dataframe: DataFrame de pandas que contiene los datos.
+    - target: Nombre de la columna a predecir en el DataFrame. Debe ser binaria y se debe indicar como una cadena de texto.
+    - columna_categorica: Nombre de la columna categórica que se desea encodear. Se debe indicar como una cadena de texto.
+    - nueva_columna: Nombre de la nueva columna que contendrá los valores encodeados. Se debe indicar como una cadena de texto.
+    '''
+
+
+    if target not in dataframe.columns:
+        print("La columna target no existe en el DataFrame.")
+        return None
+
+    if columna_categorica not in dataframe.columns:
+        print("La columna columna_categorica no existe en el DataFrame.")
+        return None
+
+    if dataframe[target].nunique() != 2:
+        print("La columna target no es binaria.")
+        return None
+
+    try:
+        dict_proporcional = dict(dataframe.groupby(columna_categorica)[target].mean())
+        dataframe[nueva_columna] = dataframe[columna_categorica].map(dict_proporcional)
+        return dataframe
+    except (KeyError, TypeError) as e:
+        print("Ocurrió un error al codificar la columna categórica:", str(e))
+        return None
+
+def eliminacion_outliers(dataframe: pd.DataFrame, nombre_columna: str):
+    '''
+    Esta función elimina las filas del DataFrame que contienen valores atípicos (outliers) en una columna especificada.
+
+    Args:
+    - dataframe: DataFrame de Pandas que contiene los datos.
+    - nombre_columna: Nombre de la columna en la cual se desean eliminar las filas con outliers. Se deberá indicar en formato string.
+
+    Return:
+    - Devuelve el DataFrame sin los valores atípicos de la columna especificada.
+    '''
+
+    if not isinstance(nombre_columna, str):
+        raise TypeError("El nombre de la columna debe ser un string.")
+
+    if nombre_columna not in dataframe.columns:
+        raise KeyError("La columna especificada no existe en el DataFrame.")
+
+    df = dataframe.copy()
+    q1 = np.percentile(df[nombre_columna], 25)
+    q3 = np.percentile(df[nombre_columna], 75)
+    rango_intercuartilico = q3 - q1
+    df = df[(df[nombre_columna] >= (q1 - 1.5 * rango_intercuartilico)) & (df[nombre_columna] <= (q3 + 1.5 * rango_intercuartilico))]
+
+    return df
+
+def comprobacion_outliers(dataframe: pd.DataFrame, nombre_columna: str) -> dict:
+    '''
+    Esta función calcula el número de outliers y su proporción con respecto al total en una columna numérica de un DataFrame de Pandas.
+
+    Args:
+    - dataframe: DataFrame de Pandas que contiene los datos.
+    - nombre_columna: Nombre de la columna para la cual se desea detectar los outliers. Se deberá indicar en formato string.
+
+    Return:
+    - Diccionario con el número de outliers en la columna especificada y el porcentaje de outliers en relación al total de datos.
+    '''
+    try:
+        if not isinstance(nombre_columna, str):
+            raise TypeError("El nombre de la columna debe ser un string.")
+            
+        df = dataframe[nombre_columna]
+        q1 = np.percentile(df, 25)
+        q3 = np.percentile(df, 75)
+        rango_intercuartilico = q3 - q1 
+        outliers = df[(df < (q1 - 1.5 * rango_intercuartilico)) | (df > (q3 + 1.5 * rango_intercuartilico))]
+        num_outliers = len(outliers)
+        porcentaje_outliers = round((num_outliers / len(df)) * 100, 2)
+        
+        result = {
+            "numero_outliers": num_outliers,
+            "porcentaje_outliers": porcentaje_outliers
+        }
+        
+        return result
+
+    except KeyError:
+        raise KeyError("Error: La columna especificada no existe en el DataFrame.")
+    except TypeError as e:
+        raise TypeError("Error: " + str(e))
+    except Exception as e:
+        raise Exception("Error: Se produjo un problema al procesar la función. Por favor, revisa la documentación de la función, verifica que los parámetros de entrada estén correctamente indicados y revisa los datos de tu DataFrame.")
 
 
 def cambiar_nombres_columnas(df, **kwargs):
@@ -488,3 +585,5 @@ def limpiar_columnas_numericas(dataframe, columna, caracteres_especiales, valor_
     dataframe[columna] = columna_datos
     
     return dataframe
+
+
