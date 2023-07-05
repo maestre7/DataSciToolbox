@@ -3,7 +3,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def plot_quality_counts(dataframe, column, color):
+def plot_quality_counts(dataframe: pd.DataFrame, column:str, color:str) -> None:
     """Crea un gráfico de barras que muestra el recuento de valores en una columna específica.
     
     Args:
@@ -25,9 +25,9 @@ def plot_quality_counts(dataframe, column, color):
     except Exception as e:
         error_message = "Ocurrió un error durante la visualización: " + str(e)
         print(error_message)
-        return None
+        
 
-def plot_heatmap(dataframe, figsize):
+def plot_heatmap(dataframe: pd.DataFrame, figsize:tuple) -> None:
     """Crea un mapa de calor (heatmap) a partir de un DataFrame.
     
     Args:
@@ -48,10 +48,10 @@ def plot_heatmap(dataframe, figsize):
     except Exception as e:
         error_message = "Ocurrió un error durante la visualización: " + str(e)
         print(error_message)
-        return None
+        
 
 
-def plot_data(dataframe, x, y, plot_type):
+def plot_data(dataframe: pd.DataFrame, x: str, y: str, plot_type: str) -> None:
     """Visualiza diferentes tipos de gráficos a partir de un DataFrame.
     
     Args:
@@ -90,4 +90,4 @@ def plot_data(dataframe, x, y, plot_type):
     except Exception as e:
         error_message = "Ocurrió un error durante la visualización: " + str(e)
         print(error_message)
-        return None
+        
