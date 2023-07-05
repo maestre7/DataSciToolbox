@@ -14,7 +14,6 @@ Le damos la bienvenida a la biblioteca de funciones en Python orientadas a machi
 
 En ella, encontrará un extensivo repositorio que abarca todas las fases necesarias para afrontar un proyecto de machine learning, desde el análisis exploratorio de datos hasta la evaluación de los modelos, pasando por las etapas de preprocesamiento, visualización, feature engineering o entrenamiento y evaluación de los modelos.
 
-<<<<<<< HEAD
 -   **.github**: contiene los archivos de configuración para GitHub Actions, que se encargan de ejecutar los tests automáticamente cada vez que se hace un commit o un pull request al repositorio. [Ver contenido](#github)
 -   **documentation**: contiene los archivos HTML y CSS que generan la documentación completa de la biblioteca, usando la herramienta Sphinx. Puede acceder a la documentación desde este [enlace](https://datascitoolbox.github.io/documentation/index.html). [Ver contenido](#documentation)
 -   **src**: contiene los archivos .py con el código fuente de la biblioteca, organizados en diferentes módulos según la funcionalidad que ofrecen. Cada módulo contiene varias funciones que se pueden importar y usar en los proyectos de machine learning. [Ver contenido](#src)
