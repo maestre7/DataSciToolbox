@@ -279,7 +279,7 @@ def comprobacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
         rango_intercuartilico = q3 - q1 
         outliers = df[(df < (q1 - 1.5 * rango_intercuartilico)) | (df > (q3 + 1.5 * rango_intercuartilico))]
 
-        return print("El número de outliers es de:", len(outliers)),"y el porcentaje de Outliers es de:", round((len(outliers) / len(df)) * 100, 2), "%")
+        return print("El número de outliers es de:", len(outliers),"y el porcentaje de Outliers es de:", round((len(outliers) / len(df)) * 100, 2), "%")
 
     except KeyError:
         print("Error: La columna especificada no existe en el DataFrame.")
