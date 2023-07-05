@@ -5,8 +5,8 @@
   <a href="#Introducción">Introducción</a> •
   <a href="#github">GitHub.</a> •
   <a href="#documentation">Documentation</a> •
-  <a href="#scr">scr</a> •
-  <a href="#test">test</a> •
+  <a href="#src">Src</a> •
+  <a href="#test">Test</a> •
   <a href="#Contribuidores ">Contribuidores</a> •
 </p>
 
