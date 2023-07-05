@@ -28,7 +28,7 @@ Esta carpeta contiene los siguientes archivos:
 -   **workflows**: una subcarpeta que contiene los archivos .yml con las instrucciones para GitHub Actions.
 -   **flujo_de_trabajo.yml**: un archivo .yml con el flujo de trabajo para ejecutar los tests.
 
-<h3 id="documentation"> :book: documentation</h3>
+<h3 id="documentation"> :open_file_folder: documentation</h3>
 Esta carpeta contiene los siguientes archivos:
 
 -   **logo_dstb.png**: un archivo .png con el logo de DataSciToolbox.
