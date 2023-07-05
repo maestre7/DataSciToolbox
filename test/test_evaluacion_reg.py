@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import load_boston # type: ignore
-from modeling import evaluacion_reg
+from src.modeling import evaluacion_reg
 
 def test_evaluacion_reg():
     # Cargar el dataset de ejemplo
