@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from encoding_proporcional import encoding_proporcional_target_binaria
+from src.preprocessing import encoding_proporcional_target_binaria
 
 # Crear una función de prueba utilizando pytest
 def test_encoding_proporcional_target_binaria():
