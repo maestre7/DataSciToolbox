@@ -257,7 +257,7 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
 
-def comprobacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
+def comprobacion_outliers(dataframe: pd.DataFrame, nombre_columna: str) -> dict:
     '''
     Esta función calcula el número de outliers y su proporción con respecto al total en una columna numérica de un DataFrame de Pandas.
 
@@ -266,8 +266,7 @@ def comprobacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
     - nombre_columna: Nombre de la columna para la cual se desea detectar los outliers. Se deberá indicar en formato string.
 
     Return:
-    - Número de outliers en la columna especificada.
-    - Porcentaje de outliers en relación al total de datos.
+    - Diccionario con el número de outliers en la columna especificada y el porcentaje de outliers en relación al total de datos.
     '''
     try:
         if not isinstance(nombre_columna, str):
@@ -278,12 +277,20 @@ def comprobacion_outliers(dataframe:pd.DataFrame, nombre_columna:str):
         q3 = np.percentile(df, 75)
         rango_intercuartilico = q3 - q1 
         outliers = df[(df < (q1 - 1.5 * rango_intercuartilico)) | (df > (q3 + 1.5 * rango_intercuartilico))]
-
-        return print("El número de outliers es de:", len(outliers),"y el porcentaje de Outliers es de:", round((len(outliers) / len(df)) * 100, 2), "%")
+        num_outliers = len(outliers)
+        porcentaje_outliers = round((num_outliers / len(df)) * 100, 2)
+        
+        result = {
+            "numero_outliers": num_outliers,
+            "porcentaje_outliers": porcentaje_outliers
+        }
+        
+        return result
 
     except KeyError:
-        print("Error: La columna especificada no existe en el DataFrame.")
+        raise KeyError("Error: La columna especificada no existe en el DataFrame.")
     except TypeError as e:
-        print("Error:", str(e))
-    except:
-        print("Error: Se produjo un problema al procesar la función. Por favor, revisa la documentación de la función, verifica que los parámetros de entrada estén correctamente indicados y revisa los datos de tu DataFrame.")
+        raise TypeError("Error: " + str(e))
+    except Exception as e:
+        raise Exception("Error: Se produjo un problema al procesar la función. Por favor, revisa la documentación de la función, verifica que los parámetros de entrada estén correctamente indicados y revisa los datos de tu DataFrame.")
+
