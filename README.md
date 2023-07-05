@@ -42,3 +42,40 @@ Esta carpeta contiene los siguientes archivos [Ver contenido](#src)
 <h3 id="test"> :computer: test</h3>
 
 Esta carpeta contiene funciones de test para testar los archivos de 
+
+
+Contribuidores 
+
+Este proyecto ha sido posible gracias a la valiosa contribución de cada uno de los siguientes integrantes, cuyo esfuerzo conjunto ha hecho posible su desarrollo: 
+
+ 
+
+Albert, Xavi 
+
+Fernández, Javier 
+
+Gilabert Sol, Braulio Vicente 
+
+Guzmán, Erika 
+
+Lupas, Gabriela Romina 
+
+Marzá, Alex 
+
+Marmolejo, Blanca 
+
+Mendizábal Ibarrola, Juan A. 
+
+Puchol, Jaime 
+
+Roca, Judit 
+
+Ruiz Santos, Alfredo 
+
+Salerno, Giacomo 
+
+Suárez, Victoria 
+
+Tejero, Javier 
+
+Valencia, Santiago 
