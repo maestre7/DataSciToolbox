@@ -1,6 +1,6 @@
 
 
-from preprocessing import cambiar_nombres_columnas
+from src.preprocessing import cambiar_nombres_columnas
 
 import pandas as pd
 import pytest

@@ -257,8 +257,6 @@ def split_and_encode_strings(column:pd.Series, use_encoding: bool = False ) -> p
         print("Ocurrió un error al separar y encodear las strings:", str(e))
         return None
 
-import pandas as pd
-
 
 def cambiar_nombres_columnas(df, **kwargs):
     """
