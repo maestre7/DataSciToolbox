@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from preprocessing import encoding_proporcional_target_binaria
+from src.preprocessing import encoding_proporcional_target_binaria
 
 @pytest.fixture
 def sample_dataframe():
