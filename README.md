@@ -1,4 +1,6 @@
+<p align="center">
 ![portada](documentation/logo_dstb.png)
+</p>
 
 <p align="center">
   <a href="#Introducción">Introducción</a> •
