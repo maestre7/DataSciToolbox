@@ -3,6 +3,7 @@ from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
 from src.modeling import train_svr
 from sklearn.svm import SVR
+import pytest
 
 
 def test_train_svr():
@@ -22,8 +23,3 @@ def test_train_svr():
     # Comprobar si el modelo hace predicciones correctamente
     y_pred = model.predict(X_test)
     assert y_pred.shape == y_test.shape
-
-    print("Prueba exitosa.")
-
-# Ejecutar el test
-test_train_svr()
