@@ -8,8 +8,7 @@ import sys
 root_dir = os.path.dirname(os.path.dirname(os.path.abspath('preprocessing.py')))
 sys.path.append(root_dir)
 
-
-from preprocessing import obtener_hora_minuto_segundo
+from src.preprocessing import obtener_hora_minuto_segundo
 
 @pytest.fixture
 def ejemplo_dataframe():

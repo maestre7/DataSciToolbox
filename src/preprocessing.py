@@ -77,6 +77,38 @@ def calcular_edad(df: pd.DataFrame, columna_nacimiento: str, fecha_referencia: s
         print(f"Ocurrió un error: {str(e)}")
         return df
 
+def obtener_hora_minuto_segundo(df:pd.DataFrame, columna_hora:str):
+    """
+    Calcula la hora, minuto y segundo en columnas separadas a partir de una columna de hora en un DataFrame.
+
+    Args:
+        df (pandas.DataFrame): DataFrame que contiene la columna de hora.
+        columna_hora (str): Nombre de la columna que contiene la hora.
+
+    Returns:
+        pandas.DataFrame: DataFrame con las columnas "hora", "minuto" y "segundo" agregadas. Si ocurre un error durante la conversión, se devuelve el DataFrame original sin modificaciones.
+
+    Raises:
+        ValueError: Si la columna de hora no se encuentra en el DataFrame.
+
+    Example:
+        df = pd.DataFrame({"hora": ["08:30:45", "12:15:30"]})
+        nuevo_df = obtener_hora_minuto_segundo(df, "hora")
+    """
+    if columna_hora not in df.columns:
+        raise ValueError(f"La columna '{columna_hora}' no se encuentra en el DataFrame.")
+
+    try:
+        hora_dt = pd.to_datetime(df[columna_hora], format="%H:%M:%S")
+        df["hora"] = hora_dt.dt.hour
+        df["minuto"] = hora_dt.dt.minute
+        df["segundo"] = hora_dt.dt.second
+    except Exception as e:
+        print("Error al convertir la columna de hora:", str(e))
+
+    return df
+=======
+
 class ReduceMemory:
     """
     Clase para reducir el consumo de memoria de un DataFrame de Pandas
