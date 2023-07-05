@@ -134,7 +134,7 @@ class ReduceMemory:
         try:
             self.before_size = round(sys.getsizeof(data_serie) / 1024 ** 2,2)
                     
-            min_value,max_value = data_serie.min(), data_serie.max()
+            min_value, max_value = data_serie.min(), data_serie.max()
             
             if min_value >= np.iinfo('int8').min and max_value <= np.iinfo('int8').max:
                 data_serie = data_serie.astype('int8')
