@@ -48,34 +48,32 @@ Contribuidores
 
 Este proyecto ha sido posible gracias a la valiosa contribución de cada uno de los siguientes integrantes, cuyo esfuerzo conjunto ha hecho posible su desarrollo: 
 
- 
+[Javier Fernández](https://github.com/jaferdy) 
 
-Albert, Xavi 
+[Santiago Valencia](https://github.com/Kuja182) 
 
-Fernández, Javier 
+[Giacomo Salerno](https://github.com/GiamoSalerno) 
 
-Gilabert Sol, Braulio Vicente 
+[Alex Marzá](https://github.com/AlexCapis) 
 
-Guzmán, Erika 
+[Gabriela Romina Lupas](https://github.com/GabrielaRomina) 
 
-Lupas, Gabriela Romina 
+[Judit Roca](https://github.com/JuditRoca) 
 
-Marzá, Alex 
+[Alfredo Ruiz Santos](https://github.com/maestre7) 
 
-Marmolejo, Blanca 
+[Blanca Marmolejo](https://github.com/BlancaMarmolejo) 
 
-Mendizábal Ibarrola, Juan A. 
+[Braulio Vicente Gilabert Sol](https://github.com/braugilabert) 
 
-Puchol, Jaime 
+[Jaime Puchol](https://github.com/jpucholv) 
 
-Roca, Judit 
+[Juan A-Mendizábal Ibarrola](https://github.com/juanmendiz) 
 
-Ruiz Santos, Alfredo 
+[Victoria Suárez](https://github.com/Vihelmet) 
 
-Salerno, Giacomo 
+[Erika Guzmán](https://github.com/Erikahenriquez78) 
 
-Suárez, Victoria 
+[Xavi Albert](https://github.com/XaviAlbert) 
 
-Tejero, Javier 
-
-Valencia, Santiago 
+[Javier Tejero](https://github.com/javiertejero1) 
