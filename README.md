@@ -37,7 +37,7 @@ Esta carpeta contiene los siguientes archivos:
 -   **memoria.ipynb**: un resumen de todas las funciones de la biblioteca.
 
 <h3 id="src"> :floppy_disk: src</h3>
-Esta carpeta contiene los siguientes archivos [Ver contenido](#src)
+Esta carpeta contiene los siguientes archivos.
 
 
 -   **modeling.py**
