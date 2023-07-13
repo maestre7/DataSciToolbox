@@ -53,27 +53,27 @@ Esta carpeta contiene funciones de test para comprobar el correcto funcionamient
 
 Este proyecto ha sido posible gracias a la valiosa contribución de cada uno de los siguientes integrantes, cuyo esfuerzo conjunto ha hecho posible su desarrollo: 
 
--   [Javier Fernández](https://github.com/jaferdy) 
+-   Javier Fernández[:beer:](https://github.com/jaferdy) 
 
 -   Santiago Valencia[:nose:](https://github.com/Kuja182) 
 
 -   Giacomo Salerno[:panda_face:](https://github.com/GiamoSalerno) 
 
--   [Alex Marzá](https://github.com/AlexCapis) 
+-   Alex Marzá[:golf:](https://github.com/AlexCapis) 
 
--   [Gabriela Romina Lupas](https://github.com/GabrielaRomina) 
+-   Gabriela Romina Lupas[:bike:](https://github.com/GabrielaRomina) 
 
--   [Judit Roca](https://github.com/JuditRoca) 
+-   Judit Roca[:dolphin:](https://github.com/JuditRoca) 
 
--   [Alfredo Ruiz Santos](https://github.com/maestre7) 
+-   Alfredo Ruiz Santos[:guardsman:](https://github.com/maestre7) 
 
--   [Blanca Marmolejo](https://github.com/BlancaMarmolejo) 
+-   Blanca Marmolejo[:blossom:](https://github.com/BlancaMarmolejo) 
 
--   [Braulio Vicente Gilabert Sol](https://github.com/braugilabert) 
+-   Braulio Vicente Gilabert Sol[:european_castle:](https://github.com/braugilabert) 
 
 -   Jaime Puchol[:chart_with_upwards_trend:](https://github.com/jpucholv) 
 
--   [Juan A-Mendizábal Ibarrola](https://github.com/juanmendiz) 
+-   Juan A-Mendizábal Ibarrola[:bowtie:](https://github.com/juanmendiz) 
 
 -   Victoria Suárez[:bird:](https://github.com/Vihelmet) 
 
