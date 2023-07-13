@@ -55,9 +55,9 @@ Este proyecto ha sido posible gracias a la valiosa contribución de cada uno de 
 
 -   [Javier Fernández](https://github.com/jaferdy) 
 
--   [Santiago Valencia](https://github.com/Kuja182) 
+-   Santiago Valencia[:nose:](https://github.com/Kuja182) 
 
--   [Giacomo Salerno](https://github.com/GiamoSalerno) 
+-   Giacomo Salerno[:panda_face:](https://github.com/GiamoSalerno) 
 
 -   [Alex Marzá](https://github.com/AlexCapis) 
 
@@ -71,14 +71,14 @@ Este proyecto ha sido posible gracias a la valiosa contribución de cada uno de 
 
 -   [Braulio Vicente Gilabert Sol](https://github.com/braugilabert) 
 
--   [Jaime Puchol](https://github.com/jpucholv) 
+-   Jaime Puchol[:chart_with_upwards_trend:](https://github.com/jpucholv) 
 
 -   [Juan A-Mendizábal Ibarrola](https://github.com/juanmendiz) 
 
--   [Victoria Suárez](https://github.com/Vihelmet) 
+-   Victoria Suárez[:bird:](https://github.com/Vihelmet) 
 
--   [Erika Guzmán](https://github.com/Erikahenriquez78) 
+-   Erika Guzmán[:crystal_ball:](https://github.com/Erikahenriquez78) 
 
--   [Xavi Albert](https://github.com/XaviAlbert) 
+-   Xavi Albert[:movie_camera:](https://github.com/XaviAlbert) 
 
--   [Javier Tejero](https://github.com/javiertejero1) 
+-   Javier Tejero[:surfer:](https://github.com/javiertejero1) 
